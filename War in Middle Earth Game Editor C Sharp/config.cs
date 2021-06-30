@@ -41,7 +41,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             {
                 confile.WriteStartDocument();
                 confile.WriteStartElement("WIMEDIRECTORY");
-                //confile.WriteElementString("directory", path);
+                confile.WriteElementString("directory", path);
                 confile.WriteElementString("EXECUTABLEFILE", fileName);
                 confile.WriteEndElement();
                 confile.WriteEndDocument();
@@ -58,7 +58,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             string filler;
             using (XmlReader confile = XmlReader.Create(CONFIG_FILE))
             {
-                if (confile.ReadToDescendant("WIMEDIRECTORYY"))
+                if (confile.ReadToDescendant("WIMEDIRECTORY"))
                 {
                     confile.ReadStartElement("WIMEDIRECTORY");
                     filler = confile.ReadElementContentAsString();

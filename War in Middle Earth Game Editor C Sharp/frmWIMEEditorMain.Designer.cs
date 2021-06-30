@@ -31,6 +31,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
         {
             this.ToolStripMain = new System.Windows.Forms.ToolStrip();
             this.OpenButton = new System.Windows.Forms.ToolStripButton();
+            this.PanelEditor = new System.Windows.Forms.Panel();
             this.ToolStripMain.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -60,12 +61,21 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             this.OpenButton.ToolTipText = "Open WIME File";
             this.OpenButton.Click += new System.EventHandler(this.OpenButton_Click);
             // 
+            // PanelEditor
+            // 
+            this.PanelEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PanelEditor.Location = new System.Drawing.Point(0, 39);
+            this.PanelEditor.Name = "PanelEditor";
+            this.PanelEditor.Size = new System.Drawing.Size(1008, 690);
+            this.PanelEditor.TabIndex = 1;
+            // 
             // frmWIMEEditorMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Gray;
             this.ClientSize = new System.Drawing.Size(1008, 729);
+            this.Controls.Add(this.PanelEditor);
             this.Controls.Add(this.ToolStripMain);
             this.Name = "frmWIMEEditorMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -83,6 +93,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
 
         private System.Windows.Forms.ToolStrip ToolStripMain;
         private System.Windows.Forms.ToolStripButton OpenButton;
+        private System.Windows.Forms.Panel PanelEditor;
     }
 }
 

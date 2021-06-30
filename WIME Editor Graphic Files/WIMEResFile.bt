@@ -1,0 +1,123 @@
+//--------------------------------------
+//--- 010 Editor v4.0.4 Binary Template
+//
+// File: WIMEResFileHeaderTemplate.bt
+// Author: Pavel ?ezní?ek
+// Revision: 1
+// Purpose: WIME Resource File Template
+//--------------------------------------
+
+LittleEndian();
+local ulong headerSize = ReadUInt(0);
+if (headerSize < 0x10000) {
+    LittleEndian(); 
+} else { 
+    BigEndian();
+};
+
+
+typedef struct RESOURCEFILEHEADER
+{
+    DWORD HeaderSize;
+    DWORD DataSegmentSize;
+    DWORD DataSize;
+    DWORD Longword4;
+};
+
+typedef struct DATACHUNK
+{
+    ulong chunkSize <bgcolor=cGreen>;
+    uchar chunkData[chunkSize];
+} ;
+
+RESOURCEFILEHEADER Header <bgcolor=cLtGreen>;
+
+// Counting chunks...
+
+local int chunkCount = 0;
+local ulong nextChunkSize = 0;
+nextChunkSize = ReadUInt(FTell());
+FSeek(FTell() + 4);
+/*Printf("chunkCount: %d\n", chunkCount);
+Printf("Position: %d\n", FTell());
+Printf("nextChunkSize: %d\n", nextChunkSize);*/
+while ((FTell() + nextChunkSize) <= Header.DataSegmentSize)
+{
+    FSeek(FTell() + nextChunkSize);
+    nextChunkSize = ReadUInt(FTell());
+    FSeek(FTell() + 4);
+    chunkCount++;
+/*  Printf("chunkCount: %d\n", chunkCount);
+    Printf("Position: %d\n", FTell());
+    Printf("nextChunkSize: %d\n", nextChunkSize);*/
+};
+
+FSeek(Header.HeaderSize);
+
+DATACHUNK DataChunks[chunkCount] <optimize=false>;
+
+RESOURCEFILEHEADER BackupHeader <bgcolor=cLtGreen>;
+
+short WordsAfterBackupHeader[4] <bgcolor=cLtYellow>;
+short Word1C <bgcolor=cYellow>;
+short WordsAfter1C[2] <bgcolor=cDkYellow>;
+
+typedef struct RESOURCETYPE
+{
+    char ID[4];
+    short InfoWords[2];
+};
+
+// We search for resource types
+local char ID[5] = "----";
+local int type_count = 0;
+local int i;
+local byte found = TRUE;
+local byte cstr_found = FALSE;
+while (found)
+{
+    for (i=0; i<4; i++)
+    {
+        ID[i] = ReadByte(
+            FTell() + type_count * 4 + i
+        );
+    };
+    if ((ID == "CSTR") || (ID == "RTSC"))
+        cstr_found = TRUE;
+    found = 
+       ((ID == "CSTR") || (ID == "RTSC") ||
+        (ID == "IMAG") || (ID == "GAMI") ||
+        (ID == "FRML") || (ID == "LMRF"));
+    if (found)
+    {
+        type_count++;
+    }
+};
+
+RESOURCETYPE ResourceTypes[type_count] <bgcolor=cPurple>; 
+
+typedef struct METADATACHUNK
+{
+    char MetadataChunk[12];
+};
+
+METADATACHUNK MetadataChunks[chunkCount] <bgcolor=cLtPurple>;
+
+typedef struct CSTRMETADATACHUNK
+{
+    char CSTRMetadataChunk[8];
+};
+
+local int cstrmdccount = 0;
+local int64 pos;
+for (pos = FTell(); pos < FileSize() - 2; pos+=8)
+{
+    cstrmdccount++;
+};
+
+if (cstrmdccount > 0)
+    CSTRMETADATACHUNK 
+        CSTRMetadataChunks[cstrmdccount]
+        <bgcolor = cLtRed>;
+
+short Ending <bgcolor = cBlack, fgcolor=cWhite>;

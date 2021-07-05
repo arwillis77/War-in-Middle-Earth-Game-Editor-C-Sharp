@@ -29,6 +29,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmWIMEEditorMain));
             this.ToolStripMain = new System.Windows.Forms.ToolStrip();
             this.OpenButton = new System.Windows.Forms.ToolStripButton();
             this.PanelEditor = new System.Windows.Forms.Panel();
@@ -77,6 +78,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             this.ClientSize = new System.Drawing.Size(1008, 729);
             this.Controls.Add(this.PanelEditor);
             this.Controls.Add(this.ToolStripMain);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmWIMEEditorMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "War in Middle Earth Game Editor";

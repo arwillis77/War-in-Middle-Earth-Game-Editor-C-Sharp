@@ -19,6 +19,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
         TabControl resourceTabs;
         FileFormat currentFormat;
         ImageList ResourceImages;
+        Image [] tabImages;
 
         config cfg;
         GamePalettesIndex gpi;
@@ -26,12 +27,18 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
         public frmWIMEEditorMain()
         {
             InitializeComponent();
-             explorerMain = new TabControl();
-            {
-                Dock = DockStyle.Fill;
-                
-            }
+     
             resourceTabs = new TabControl();
+            tabImages = new Image[] {
+            War_in_Middle_Earth_Game_Editor_C_Sharp.Properties.Resources.menutileicon,
+            War_in_Middle_Earth_Game_Editor_C_Sharp.Properties.Resources.texticon32,
+            War_in_Middle_Earth_Game_Editor_C_Sharp.Properties.Resources.fonts,
+            War_in_Middle_Earth_Game_Editor_C_Sharp.Properties.Resources.menuanimicon,
+            War_in_Middle_Earth_Game_Editor_C_Sharp.Properties.Resources.menusceneiconbig,
+            War_in_Middle_Earth_Game_Editor_C_Sharp.Properties.Resources.menumapicon,
+            War_in_Middle_Earth_Game_Editor_C_Sharp.Properties.Resources.menuarchiveicon,
+            };
+
             //this.Controls.Add(explorerMain);
             //this.Controls.Add(resourceTabs);
 
@@ -42,7 +49,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
         {
             string p_fileName;
             string p_fileDir;
-            bool p_closeGame;
+            bool p_closeGame = false;
 
             OpenFileDialog WIMEFileOpen = new OpenFileDialog
             {
@@ -66,64 +73,56 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
 
         public void LoadGame()
         {
-            TabPage GameTab;
-            List<TabPage> GameTabs;
-        
 
-            PanelEditor.Controls.Add(explorerMain);
-            explorerMain.Dock = DockStyle.Fill;
+            // TabControl ExplorerMain
+            // TabControl resourceTabs
 
-            //explorerMain.TabPages.Add(GameTab);
-            resourceTabs = new TabControl
-            {
-                Dock = DockStyle.Fill,
-                Text = "Resource 1",
-            };
-
-            ResourceImages = new ImageList
+            ResourceImages = new ImageList                                                          /* Set imagelist to store icons used in tabs */
             {
                 ImageSize = new Size(16, 16),
-
-
-
             };
+            TabPage ResourceExplorer = new TabPage();                                               /* TabPag for ResourceExplorer Main TabPage.  Placed into the ExplorerMain TabControl */
+            List<TabPage> GameTabs;                                                                 /* Collection of all the Game Resource Tabs */
+            TabPage GameTab;                                                                        /* Individual GameTab */
 
-            Image[] tabImages = new Image[] {
-            War_in_Middle_Earth_Game_Editor_C_Sharp.Properties.Resources.menutileicon,
-            War_in_Middle_Earth_Game_Editor_C_Sharp.Properties.Resources.texticon32,
-            War_in_Middle_Earth_Game_Editor_C_Sharp.Properties.Resources.fonts,
-            War_in_Middle_Earth_Game_Editor_C_Sharp.Properties.Resources.menuanimicon,
-            War_in_Middle_Earth_Game_Editor_C_Sharp.Properties.Resources.menusceneiconbig,
-            War_in_Middle_Earth_Game_Editor_C_Sharp.Properties.Resources.menumapicon,
-            War_in_Middle_Earth_Game_Editor_C_Sharp.Properties.Resources.menuarchiveicon,
+            // **** TO DO -- GetFileList function */
+
+            explorerMain = new TabControl
+            {
+                Dock = DockStyle.Fill,
             };
+            resourceTabs = new TabControl();
             ResourceImages.Images.AddRange(tabImages);
-            
+            ResourceImages.Images.Add(currentFormat.Icon);
+            resourceTabs.ImageList = ResourceImages;
+            explorerMain.ImageList = ResourceImages;
             GameTabs = new List<TabPage>();
-                for(int x = 0; x < ResourceFile.chunkID.Length; x++)
-                {
+            for (int x = 0; x < ResourceFile.chunkID.Length; x++)
+            {
                 GameTab = new TabPage()
                 {
                     Text = ResourceFile.chunkID[x],
-                    
+                    ImageIndex = x,
+
                 };
+                frmResourceList p_form = new frmResourceList(ResourceFile.chunkID[x]);
+                GameTab.Controls.Add(p_form);
+                p_form.Show();
                 GameTabs.Add(GameTab);
             }
-            //explorerMain.TabPages.Add(GameTabs);
+            ResourceExplorer.Text = "Resource Explorer";
+            ResourceExplorer.ImageIndex = 7;
+            PanelEditor.Controls.Add(explorerMain);
+            explorerMain.TabPages.Add(ResourceExplorer);
+
+            ResourceExplorer.Controls.Add(resourceTabs);
+            resourceTabs.Dock = DockStyle.Fill;
             for (int y = 0; y < GameTabs.Count; y++)
             {
-                explorerMain.Controls.Add(GameTabs[y]);
+                resourceTabs.TabPages.Add(GameTabs[y]);
                 GameTabs[y].ImageIndex = y;
             }
-            explorerMain.ImageList = ResourceImages;
-                
-           
-
-
-
-
-
-
+          
 
 
         }

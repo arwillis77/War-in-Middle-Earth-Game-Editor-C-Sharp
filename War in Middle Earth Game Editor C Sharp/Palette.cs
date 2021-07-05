@@ -19,7 +19,9 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
 
 
 
-
+    /// <summary>
+    /// Class <c>Palette</c> creates a class with three bytes for red, green, and blue values.
+    /// </summary>
     public class Palette
     {
         public byte red;
@@ -27,7 +29,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
         public byte blue;
 
         /* MASTER PALETTE - VGA, EGA, IIGS, AMIGA, ATARI ST */
-        private static byte[,] game_pal = new byte[,]  {
+        private static readonly byte[,] game_pal = new byte[,]  {
             /* 00 */    {0x0,0x0,0x0},
             /* 01 */    {0x86,0x86,0x86},
             /* 02 */    {0x55,0x55,0x55},

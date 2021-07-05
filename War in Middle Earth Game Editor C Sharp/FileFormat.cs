@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,6 +27,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
         public string ExeFile;
         public int Bitplanes;
         public int FrmlBitplanes;
+        public Icon Icon;
         public struct Offsets
         {
             public int bannerIcons;
@@ -49,9 +51,9 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
                 this.exeInventoryName = ein;
                 this.exeCharacterValue = ecv;
                 this.exeDifferenceOffset = edo;
+                
             }
         }
-
 
         public FileFormat()
         {
@@ -66,11 +68,12 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             this.ExeFile = Constants.GameFormat[value].ExeFile;
             this.Bitplanes = Constants.GameFormat[value].Bitplanes;
             this.FrmlBitplanes = Constants.GameFormat[value].FrmlBitplanes;
+            this.Icon = Constants.GameFormat[value].Icon;
         }
 
 
 
-        public FileFormat(string name,int endian,int dataEndian, string exeFile,int bitPlanes,int frmlBitplanes)
+        public FileFormat(string name,int endian,int dataEndian, string exeFile,int bitPlanes,int frmlBitplanes, Icon ico)
         {
             this.Name = name;
             this.Endian = endian;
@@ -78,6 +81,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             this.ExeFile = exeFile;
             this.Bitplanes = bitPlanes;
             this.FrmlBitplanes = frmlBitplanes;
+            this.Icon = ico;
         }
         
 
@@ -98,13 +102,19 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
         public const string AMIGA_FORMAT = "AMIGA";
         public const string ST_FORMAT = "ST";
 
+        public static Icon PC_ICON = Properties.Resources.msdosicon;
+        public static Icon PC_EGA_ICON = Properties.Resources.msdosicon;
+        public static Icon IIGS_ICON = Properties.Resources.Apple2Icon;
+        public static Icon AMIGA_ICON = Properties.Resources.amigaicon;
+        public static Icon ATARI_ICON = Properties.Resources.atariicon;
+
         public static List<FileFormat> GameFormat = new List<FileFormat>
         {
-            new FileFormat(PC_VGA_FORMAT, 0, 1, PC_VGA_EXE, 5, 5 ),
-            new FileFormat(PC_EGA_FORMAT, 0, 0, PC_EGA_EXE, 0, 0 ),
-            new FileFormat(IIGS_FORMAT, 0, 0, IIGS_EXE, 0, 0 ),
-            new FileFormat(AMIGA_FORMAT, 1, 1, AMIGA_EXE, 5, 5 ),
-            new FileFormat(IIGS_FORMAT, 1, 1, ST_EXE, 4, 4 )
+            new FileFormat(PC_VGA_FORMAT, 0, 1, PC_VGA_EXE, 5, 5, PC_ICON ),
+            new FileFormat(PC_EGA_FORMAT, 0, 0, PC_EGA_EXE, 0, 0,PC_ICON ),
+            new FileFormat(IIGS_FORMAT, 0, 0, IIGS_EXE, 0, 0,IIGS_ICON ),
+            new FileFormat(AMIGA_FORMAT, 1, 1, AMIGA_EXE, 5, 5,AMIGA_ICON ),
+            new FileFormat(IIGS_FORMAT, 1, 1, ST_EXE, 4, 4,ATARI_ICON )
         };
         public static List<FileFormat.Offsets> offsets = new List<FileFormat.Offsets>
         {

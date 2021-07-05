@@ -45,7 +45,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             //this.chunkData = unpack.IMAG_unpackByteRun(this);
             WriteChunkFile(this.chunkData, offset);
             this.IMAG_Palette = new Palette[PaletteSize];
-            IMAG_Palette = Palette.SetPalette(paletteIndex);
+            //IMAG_Palette = Palette.SetPalette(paletteIndex);
 
         }
 
@@ -82,7 +82,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             public byte height;                     /* Image Height */
             public byte unknown;                    /* unknown byte */
 
-            public int rawStartOffset;
+            public int rawStartOffset;              /* int start of image data */
             public long imageStart;
 
             public IMAGHeader(BinaryReader binRead, int offSet)

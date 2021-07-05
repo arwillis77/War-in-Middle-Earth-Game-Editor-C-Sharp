@@ -61,6 +61,36 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon amigaicon {
+            get {
+                object obj = ResourceManager.GetObject("amigaicon", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon Apple2Icon {
+            get {
+                object obj = ResourceManager.GetObject("Apple2Icon", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon atariicon {
+            get {
+                object obj = ResourceManager.GetObject("atariicon", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap Floppy_disk3232 {
@@ -131,6 +161,16 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon msdosicon {
+            get {
+                object obj = ResourceManager.GetObject("msdosicon", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap Open3232 {
@@ -157,6 +197,16 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp.Properties {
             get {
                 object obj = ResourceManager.GetObject("texticon32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon wime {
+            get {
+                object obj = ResourceManager.GetObject("wime", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
     }

@@ -4,12 +4,13 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Xml;
 
 namespace War_in_Middle_Earth_Game_Editor_C_Sharp
 {
 
-    class config
+    public class config
     {
         const string CONFIG_FILE = "wimeed.cfg";
         public bool ConfigPresent;
@@ -18,8 +19,9 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
 
         public config()
         {
-
-            ConfigPresent = ConfigExist(CONFIG_FILE);
+            this.ConfigPresent = ConfigExist(CONFIG_FILE);
+            this.GameDirectory = "C:/WIME";
+            this.GameExecutable = "WIME.EXE";
 
         }
 
@@ -54,7 +56,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
         /* ConfigGetFilename - Gets executable filename from config file. */
         public static string ConfigGetFilename()
         {
-            string result = "NULL";
+            string result = null;
             string filler;
             using (XmlReader confile = XmlReader.Create(CONFIG_FILE))
             {
@@ -70,39 +72,27 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             return result;
 
         }
+        
+        public string ConfigGetDirectory()
+        {
+            string result = null;
+            using (XmlReader confile = XmlReader.Create(CONFIG_FILE))
+            {
+                if (confile.ReadToDescendant("WIMEDIRECTORY"))
+                {
+                   confile.ReadStartElement("WIMEDIRECTORY");
+                   GameDirectory = confile.ReadElementContentAsString();
+                   MessageBox.Show(GameDirectory.ToString(), "Existing GameFileFound!");
+                }
 
+            }
 
+            return result;
+        }
 
     }
 
-    class Game
-    {
-        public string filepath;
-        public string filename;
-        public string format;
-        public int formatVal;
-        public int endian;
-        public int dataEndian;
-
-        public Game()
-        {
-
-
-        }
-        public Game(string fileName)
-        {
-            this.filename = fileName;
-            this.filepath = Path.GetDirectoryName(filename);
-
-
-        }
-
-
-
-
-
-    }
-
+    
 
 
 }

@@ -10,7 +10,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
 {
     public class FileFormat
     {
-        public const string PC_VGA_EXE = "START.EXE";
+        /*public const string PC_VGA_EXE = "START.EXE";
         public const string PC_EGA_EXE = "LORD.EXE";
         public const string IIGS_EXE = "EARTH.SYS16";
         public const string AMIGA_EXE = "WARINMIDDLEEARTH";
@@ -20,6 +20,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
         public const string IIGS_FORMAT = "IIGS";
         public const string AMIGA_FORMAT = "AMIGA";
         public const string ST_FORMAT = "ST";
+        */
 
         public string Name;
         public int Endian;
@@ -89,15 +90,15 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
     static class Constants
     {
         public const string Program_Name = "WAR IN MIDDLE EARTH GAME EDITOR";
-        public const string Program_Version = "1.00B Build 1 VS2019 C#";
-        public const string ProgramDate = "06/19/2021";
+        public const string Program_Version = "1.00B Build 2 VS2019 C#";
+        public const string ProgramDate = "07/05/2021";
         public const string PC_VGA_EXE = "START.EXE";
         public const string PC_EGA_EXE = "LORD.EXE";
         public const string IIGS_EXE = "EARTH.SYS16";
         public const string AMIGA_EXE = "WARINMIDDLEEARTH";
         public const string ST_EXE = "COMMAND.PRG";
-        public const string PC_VGA_FORMAT = "VGA";
-        public const string PC_EGA_FORMAT = "EGA";
+        public const string PC_VGA_FORMAT = "PC VGA";
+        public const string PC_EGA_FORMAT = "PC EGA";
         public const string IIGS_FORMAT = "IIGS";
         public const string AMIGA_FORMAT = "AMIGA";
         public const string ST_FORMAT = "ST";

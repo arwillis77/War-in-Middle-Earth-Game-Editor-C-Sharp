@@ -268,7 +268,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             string format = name;
             GamePalettesIndex palIndex;
 
-            if (format == FileFormat.PC_VGA_FORMAT)
+            if (format == Constants.PC_VGA_FORMAT)
             {
                 palIndex.atitle = Palette.vgatitle;
                 palIndex.ascene = Palette.vgaascene;
@@ -278,7 +278,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
                 palIndex.defaultSprite = Palette.defaultsprite;
                
             }
-            if (format == FileFormat.PC_EGA_FORMAT)
+            if (format == Constants.PC_EGA_FORMAT)
             {
                 palIndex.atitle = Palette.vgaamap;              /* vgaamap is default value 0-15. */
                 palIndex.ascene = Palette.vgaamap;
@@ -288,7 +288,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
                 palIndex.defaultSprite = Palette.vgaamap;
 
             }
-            if(format == FileFormat.IIGS_FORMAT)
+            if(format == Constants.IIGS_FORMAT)
             {
                 palIndex.ascene = Palette.vgaamap;
                 palIndex.atitle = Palette.gstitle;
@@ -298,7 +298,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
                 palIndex.defaultSprite = Palette.gsdefaultsprite;
 
             }
-            if (format == FileFormat.AMIGA_FORMAT)
+            if (format == Constants.AMIGA_FORMAT)
             {
                 palIndex.ascene = Palette.amigascene;
                 palIndex.atitle = Palette.amigatitle;

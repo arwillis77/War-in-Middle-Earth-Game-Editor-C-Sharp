@@ -38,6 +38,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
 
         /* Array of ID Constants */
         public static string[] chunkID = { CHAR_ID, CSTR_ID, FONT_ID, FRML_ID, IMAG_ID, MAP_ID, ARCHIVE_ID };
+        public static string[] chunkTypes = {"TILE","TEXT","FONT","SPRITE","IMAGE","GAME MAP","SAVEGAME" };
 
 
         /* ARCHIVE SAVE GAME FOR ALL FORMATS */

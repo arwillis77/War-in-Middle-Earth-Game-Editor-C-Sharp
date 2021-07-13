@@ -15,6 +15,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
     public partial class frmWIMEEditorMain : Form
     {
         /* Global Form Variables */
+        public string[] GameFiles;
         TabControl explorerMain;
         TabControl resourceTabs;
         FileFormat currentFormat;
@@ -85,6 +86,8 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             List<TabPage> GameTabs;                                                                 /* Collection of all the Game Resource Tabs */
             TabPage GameTab;                                                                        /* Individual GameTab */
 
+
+            MessageBox.Show(currentFormat.Name.ToString(), "Current Format");
             // **** TO DO -- GetFileList function */
 
             explorerMain = new TabControl
@@ -105,7 +108,8 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
                     ImageIndex = x,
 
                 };
-                frmResourceList p_form = new frmResourceList(ResourceFile.chunkID[x]);
+                
+                frmResourceList p_form = new frmResourceList(currentFormat.Name, ResourceFile.chunkID[x]);
                 GameTab.Controls.Add(p_form);
                 p_form.Show();
                 GameTabs.Add(GameTab);

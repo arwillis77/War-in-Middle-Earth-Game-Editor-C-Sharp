@@ -103,6 +103,10 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
         public const string AMIGA_FORMAT = "AMIGA";
         public const string ST_FORMAT = "ST";
 
+
+        public const int INT_MAX = 65535;
+        
+
         public static Icon PC_ICON = Properties.Resources.msdosicon;
         public static Icon PC_EGA_ICON = Properties.Resources.msdosicon;
         public static Icon IIGS_ICON = Properties.Resources.Apple2Icon;

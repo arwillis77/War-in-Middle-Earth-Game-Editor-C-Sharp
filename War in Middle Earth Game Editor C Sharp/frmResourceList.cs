@@ -14,31 +14,21 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
     public partial class frmResourceList : UserControl
     {
         string ResourceType;
-        string FileFormat;
-        string [] GameFiles;                                /* Array which stores resource filenames for the current file format */
-       
-        List<ResourceViewData> resDatalist;
-
-        Form frmResourceItem;
         SplitContainer SplitResourceList;
         TabPage Page;
-        int CurrentTile;
-        //string ArchiveName;
-        //string EXEFile;
-        //string EXEFull;
+        int CurrentTile = 0;
         public ListView ListResourceItems;
-        
-
+        public ListViewItem lvi;
+        public ResourceList SelectedResource;
         public frmResourceList()
         {
             InitializeComponent();
         }
-
-        public frmResourceList(string format,string resource)
+        public frmResourceList(string resource, ResourceList rdata)
         {
             InitializeComponent();
             this.ResourceType = resource;
-            this.FileFormat = format;
+            this.SelectedResource = rdata;                   
             this.Dock = DockStyle.Fill;
             SplitResourceList = new SplitContainer
             {
@@ -47,91 +37,31 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
                 IsSplitterFixed = false,
                 SplitterIncrement = 1,
             };
-                this.Controls.Add(SplitResourceList);
-
+            this.Controls.Add(SplitResourceList);
         }
-
         private void frmResourceList_Load(object sender, EventArgs e)
         {
             SetupResourceTable();                                                       /* Setup table in resourcelist object */
-            GameFiles = GetFileList(FileFormat);                                        /* Obtain resource file names for game format */
-
-
-
-
-
-            //ListResourceItems.Height = this.Height - 20;
-            //SplitResourceList.Refresh();
-
-            
+            FillTable();
         }
-
-
-        public void FillResourceList()
+        private void FillTable()
         {
-           
-            for (int a = 0; a < GameFiles.Count();a++)
+            /* TO DO --- FILE ARCHIVE TAB, POPULATE INDIVIDUAL TILES */
+            int x;
+            for (x=0; x<SelectedResource.Count; x++)
             {
-                GetResourceSummary(GameFiles[a]);
-            }
-        }
-
-        public void GetResourceSummary(string filename)
-        
-        {
-            int j;
-            int quantity=0;
-            int resourceSet=0;
-            ResourceViewData resdata;
-            BinaryReader br = new(File.Open(filename, FileMode.Open));
-            ResourceFile rf = new(br);
-            for(j=0;j<rf.ResourceQuantity;j++)
-            {
-                if(rf.resourceID[j].ID == ResourceType)
+                if(SelectedResource[x].Type == ResourceType)
                 {
-                    quantity = (rf.resourceID[j].Quantity) + 1;
-                    resourceSet = j;
+                    lvi = new ListViewItem(SelectedResource[x].Name);
+                    lvi.SubItems.Add(SelectedResource[x].ResourceNumber.ToString());
+                    lvi.SubItems.Add(SelectedResource[x].DataSize.ToString());
+                    lvi.SubItems.Add(SelectedResource[x].Type);
+                    lvi.SubItems.Add(SelectedResource[x].FileName);
+                    lvi.SubItems.Add(SelectedResource[x].Offset.ToString());
+                    ListResourceItems.Items.Add(lvi);
                 }
-              
-
             }
-
-
-
-
-
         }
-
-
-
-
-        public string [] GetFileList(string fileFormat)
-        {
-            string[] result = null;
-            int size =0;
-            
-            if (fileFormat == Constants.PC_VGA_FORMAT)
-            {
-                //MessageBox.Show("VGA Format!");
-                size = ResourceFile.VGA_FILES.Count();
-                result = new string[size];
-                for (int x = 0; x < size; x++)
-                    result[x] = ResourceFile.VGA_FILES[x];
-                
-            }
-            if (fileFormat == Constants.PC_EGA_FORMAT)
-            {
-                //MessageBox.Show("EGA Format!");
-
-                size = ResourceFile.EGA_FILES.Count();
-                result = new string[size];
-                for (int x = 0; x < size; x++)
-                    result[x] = ResourceFile.EGA_FILES[x];
-            }  
-
-            return result;
-        }
-
         /// <summary>
         /// SetupResourceTable - Fills columns up for list of resource.
         /// </summary>
@@ -153,9 +83,5 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             ListResourceItems.Columns.Add("Resource",50, HorizontalAlignment.Right);
             ListResourceItems.Columns.Add("Offset", 50, HorizontalAlignment.Left);
         }
-
-        
-
-
     }
 }

@@ -9,36 +9,36 @@ using System.Xml;
 
 namespace War_in_Middle_Earth_Game_Editor_C_Sharp
 {
-
+    /// <summary>
+    /// Class for program configuration file.
+    /// </summary>
     public class config
     {
         const string CONFIG_FILE = "wimeed.cfg";
         public bool ConfigPresent;
         public string GameDirectory;
         public string GameExecutable;
-
         public config()
         {
             this.ConfigPresent = ConfigExist(CONFIG_FILE);
             this.GameDirectory = "C:/WIME";
             this.GameExecutable = "WIME.EXE";
-
         }
-
-
+        /// <summary>
+        /// Checks for existing configuration file.
+        /// </summary>
+        /// <param name="path">Path where configuration file would be located.</param>
+        /// <returns>True is exists, false if not.</returns>
         private bool ConfigExist(string path)
         {
             bool result;
             result = File.Exists(path);
             return result;
         }
-
         public static void WriteConfig(string path, string fileName)
-
         {
             XmlWriterSettings settings = new XmlWriterSettings();
             settings.Async = true;
-
             using (XmlWriter confile = XmlWriter.Create(CONFIG_FILE, settings))
             {
                 confile.WriteStartDocument();
@@ -49,11 +49,11 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
                 confile.WriteEndDocument();
                 confile.Close();
             }
-
-
         }
-        
-        /* ConfigGetFilename - Gets executable filename from config file. */
+        /// <summary>
+        /// Gets executable filename stored in the config file.
+        /// </summary>
+        /// <returns>String containing filename.</returns>
         public static string ConfigGetFilename()
         {
             string result = null;
@@ -67,12 +67,9 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
                     result = confile.ReadElementContentAsString();
                     //MessageBox.Show(result.ToString(), "Existing GameFileFound!");
                 }
-
             }
             return result;
-
-        }
-        
+        }        
         public string ConfigGetDirectory()
         {
             string result = null;
@@ -82,17 +79,10 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
                 {
                    confile.ReadStartElement("WIMEDIRECTORY");
                    GameDirectory = confile.ReadElementContentAsString();
-                   MessageBox.Show(GameDirectory.ToString(), "Existing GameFileFound!");
                 }
-
             }
-
+            result = GameDirectory;
             return result;
         }
-
     }
-
-    
-
-
 }

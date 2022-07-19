@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using War_in_Middle_Earth_Game_Editor_C_Sharp.Classes;
 
 namespace War_in_Middle_Earth_Game_Editor_C_Sharp
 {
@@ -121,10 +122,12 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
         /// <summary>
         /// Initializes Resource List summaries that populate listview.
         /// </summary>
-        /// <param name="format">File format of the game file.</param>
+        /// <param name="format">File Format class contains data for the file format of the game file.</param>
         /// <returns>ResourceList object containing list of all individual ResourceList objects.</returns>
-        public static ResourceList InitializeResourceList(string format)
+        public static ResourceList InitializeResourceList(FileFormat format)
         {
+
+            BinaryReader br;
             int a, j,k;
             string[] GameFiles = GetFileList(format);                                       /* Initialize Game File List */
             ResourceList resourcelist = new ResourceList();
@@ -133,33 +136,81 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             {
                 string filename = GetFullResourceFilename(GameFiles[a]);
                 int quantity;
-                BinaryReader br = new(File.Open(filename, FileMode.Open));                  /* Open resource file -- filename */
+                int index;
+                br = new(File.Open(filename, FileMode.Open));                  /* Open resource file -- filename */
                 ResourceFile rf = new(br);                                                  /* Process resource file sans chunks into ResourceFile object */
                 quantity = rf.ResourceQuantity;
-                for(j=0;j<quantity;j++)                                                     /* For each resource file, cycles through the individual resource types */
+                for (j = 0; j < quantity; j++)                                                     /* For each resource file, cycles through the individual resource types */
                 {
                     string resName = rf.resourceID[j].ID;
-                    int index = rf.resourceID[j].Quantity;
-                    for (k = 0; k < index; k++)                                             /* For each resource type, cycles through each entry in selected type in selected file */
+                    if (resName == ResourceFile.CHAR_ID)
+                        index = Constants.TILE_MAX;
+                    else
+                        index = rf.resourceID[j].Quantity;
+                    for (k = 0; k < index; k++)
                     {
                         rvd = GetEntry(rf, j, k, br);
                         rvd.FileName = GameFiles[a].Substring(0, GameFiles[a].Length - 4);
                         resourcelist.Add(rvd);
                     }
+
                 }
+                br.Close();                                                 /* Close resource file */
             }
             return resourcelist;
         }
+
+
+        public static ResourceList InitializeArchive(FileFormat format, CharacterNameList cnl)
+        {
+            ResourceList archivelist = new ResourceList();
+            ResourceViewData avd;
+            for (int x = 0; x < cnl.Count; x++)
+                {
+                    avd = new ResourceViewData();
+                    avd.Name = cnl[x].Name;
+                    avd.ResourceNumber = x;
+                    avd.DataSize = GetBlockLength(format);
+                    avd.Type = ResourceFile.chunkTypes[6];
+                    avd.FileName = "ARCHIVE";
+                    avd.Offset = (int)avd.DataSize + (int)(avd.DataSize * x);
+                    archivelist.Add(avd);
+                }
+                return archivelist;
+        }
+
+
+
+        public static uint GetBlockLength(FileFormat arcformat)
+        {
+            uint result;
+            if (arcformat.Endian == 0)
+                result = 37;
+            else
+                result = 38;
+            return result;
+        }
+
+
+        /*
+        public static ResourceList InitalizeArchiveList(FileFormat format)
+        {
+            ResourceList archivelist = new ResourceList();
+            ResourceViewData archive;
+
+
+
+        }*/
         /// <summary>
         /// GetFileList - Provides list of resource files dependent on the selected file format.
         /// </summary>
         /// <param name="fileFormat">The file format of the opened game file.</param>
         /// <returns>Array of filenames string [] for the given format are returned.</returns>
-        public static string[] GetFileList(string fileFormat)
+        public static string[] GetFileList(FileFormat format)
         {
             string[] result = null;
             int size = 0;                                                                   /* Size of file array to store filename strings. */
-            switch (fileFormat)
+            switch (format.Name)
             {
                 case Constants.PC_VGA_FORMAT:                                               // PC VGA Format
                     size = ResourceFile.VGA_FILES.Count();
@@ -193,14 +244,30 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
         public static ResourceViewData GetEntry(ResourceFile resourceFile,int fileResourceIndex, int ResourceIndex,BinaryReader binRead)
         {
             
-            int multiplier = resourceFile.resourceID[fileResourceIndex].ResourceMap[ResourceIndex].multiplier;
+            string Tile = ResourceFile.chunkTypes[0];
             ResourceViewData result = new ResourceViewData();
-            result.ResourceNumber = resourceFile.resourceID[fileResourceIndex].ResourceMap[ResourceIndex].resourceNumber;
-            result.Name = string.Concat(resourceFile.resourceID[fileResourceIndex].ID, result.ResourceNumber);
             result.Type = result.GetType(resourceFile.resourceID[fileResourceIndex].ID);
-            result.Offset = (resourceFile.resourceID[fileResourceIndex].ResourceMap[ResourceIndex].resourceChunkOffset) + (Constants.INT_MAX * multiplier) + (1 * multiplier);
-            result.DataSize = result.GetSize(binRead, result.Offset);
-            return result;
+            if (result.Type == Tile)
+            {
+                result.ResourceNumber = ResourceIndex;
+                result.Name = string.Concat(ResourceFile.CHAR_ID, " ", result.ResourceNumber);
+                result.Type = ResourceFile.chunkTypes[0];
+                result.DataSize = (Constants.TILE_MAX + 1);
+                result.Offset = (resourceFile.resourceID[fileResourceIndex].ResourceMap[0].resourceChunkOffset) + ((int)(result.DataSize) * ResourceIndex);
+
+            }
+    
+            else
+            {
+                int multiplier = resourceFile.resourceID[fileResourceIndex].ResourceMap[ResourceIndex].multiplier;
+                result.ResourceNumber = resourceFile.resourceID[fileResourceIndex].ResourceMap[ResourceIndex].resourceNumber;
+                result.Name = string.Concat(resourceFile.resourceID[fileResourceIndex].ID, result.ResourceNumber);
+
+
+                result.Offset = (resourceFile.resourceID[fileResourceIndex].ResourceMap[ResourceIndex].resourceChunkOffset) + (Constants.INT_MAX * multiplier) + (1 * multiplier);
+                result.DataSize = result.GetSize(binRead, result.Offset);
+            }
+                return result;
         }
         /// <summary>
         /// Gets the full resource filename including the path.
@@ -210,11 +277,27 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
         public static string GetFullResourceFilename(string filename)
         {
             string result = "";
-            config cs = new config();
-            string m_directory = cs.ConfigGetDirectory();
+            Config cs = new Config(true);
+            string m_directory = cs.GameDirectory;
             result = string.Concat(m_directory, "\\", filename);
             return result;
         }
 
     }
+    public class SaveGameList
+    {
+        private List<ResourceViewData> archiveviewdata;
+
+        public SaveGameList()
+        {
+            archiveviewdata = new List<ResourceViewData>();
+            
+        }
+
+
+
+    }
 }
+
+
+

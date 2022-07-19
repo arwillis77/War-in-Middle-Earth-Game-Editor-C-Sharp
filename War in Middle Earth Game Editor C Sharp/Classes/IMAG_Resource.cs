@@ -8,26 +8,17 @@ using System.Windows.Forms;
 
 namespace War_in_Middle_Earth_Game_Editor_C_Sharp
 {
-    
+    /// <summary>
+    /// Class which handles Resource type IMAG.  IMAG files are used for title screen graphics, background art, trees, mountains, cities    
+    /// used on top of backgrounds, game icons, and map icons for forces.
+    /// </summary>
     public class IMAG_Resource
     {
-        /*****************************************************************************************************************************************
-         *****************************************************************************************************************************************
-         **                                                                                                                                     **
-         ** IMAG_Resource Class                                                                                                                 **
-         **                                                                                                                                     **
-         ** Class which handles Resource type IMAG.  IMAG files are used for title screen graphics, background art, trees, mountains, cities    **
-         ** used on top of backgrounds, game icons, and map icons for forces.                                                                   **
-         **                                                                                                                                     **
-         *****************************************************************************************************************************************
-         *****************************************************************************************************************************************/
         const int PaletteSize = 32;
         const int Max_Num_Bitplanes = 32;
         public IMAGHeader ih;
         public Palette[] IMAG_Palette;
         public byte[] chunkData;
-        
-
         public IMAG_Resource()
         {
         }
@@ -48,7 +39,6 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             //IMAG_Palette = Palette.SetPalette(paletteIndex);
 
         }
-
         public static uint calculateRowSize(int width)
         {
             uint rowSizeinWords = (uint)width / 16;
@@ -64,7 +54,6 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             using var fs = new FileStream(fullname, FileMode.Create, FileAccess.Write);
             fs.Write(cData, 0, cData.Length);
         }
-
         public struct IMAGHeader
         {
             public uint compSize;                   /* 4 bytes - 0x00 - 0x03    Compressed data size   */
@@ -81,13 +70,11 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             public ushort width;                    /* Image Width  2 bytes*/
             public byte height;                     /* Image Height */
             public byte unknown;                    /* unknown byte */
-
             public int rawStartOffset;              /* int start of image data */
             public long imageStart;
 
             public IMAGHeader(BinaryReader binRead, int offSet)
             {
-
                 binRead.BaseStream.Position = offSet;
                 this.compSize = binRead.ReadUInt32();
                 this.uncmpSize = binRead.ReadUInt32();
@@ -102,7 +89,6 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
                 this.plane = binRead.ReadByte();
                 this.width = 0;
                 this.height = 0;
-
                 if (this.plane == 3)
                 {
                     ushort c;

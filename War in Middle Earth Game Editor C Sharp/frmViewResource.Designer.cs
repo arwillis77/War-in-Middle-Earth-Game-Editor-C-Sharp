@@ -31,9 +31,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmViewResource));
             this.sstripResourceStatus = new System.Windows.Forms.StatusStrip();
-            this.lblGameStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.labelMagnification = new System.Windows.Forms.ToolStripStatusLabel();
-            this.dropdownScale = new System.Windows.Forms.ToolStripDropDownButton();
+            this.labelGameStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblSpriteColor = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.pnlMainDisplay = new System.Windows.Forms.Panel();
@@ -43,9 +41,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             // sstripResourceStatus
             // 
             this.sstripResourceStatus.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.lblGameStatus,
-            this.labelMagnification,
-            this.dropdownScale,
+            this.labelGameStatus,
             this.lblSpriteColor,
             this.toolStripDropDownButton1});
             this.sstripResourceStatus.Location = new System.Drawing.Point(0, 568);
@@ -54,32 +50,16 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             this.sstripResourceStatus.TabIndex = 0;
             this.sstripResourceStatus.Text = "statusStrip1";
             // 
-            // lblGameStatus
+            // labelGameStatus
             // 
-            this.lblGameStatus.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.lblGameStatus.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
+            this.labelGameStatus.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.labelGameStatus.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
             | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
             | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
-            this.lblGameStatus.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenInner;
-            this.lblGameStatus.Name = "lblGameStatus";
-            this.lblGameStatus.Size = new System.Drawing.Size(97, 19);
-            this.lblGameStatus.Text = "Resource Details";
-            // 
-            // labelMagnification
-            // 
-            this.labelMagnification.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.labelMagnification.Name = "labelMagnification";
-            this.labelMagnification.Size = new System.Drawing.Size(81, 19);
-            this.labelMagnification.Text = "Magnification";
-            // 
-            // dropdownScale
-            // 
-            this.dropdownScale.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.None;
-            this.dropdownScale.Image = ((System.Drawing.Image)(resources.GetObject("dropdownScale.Image")));
-            this.dropdownScale.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.dropdownScale.Name = "dropdownScale";
-            this.dropdownScale.Size = new System.Drawing.Size(13, 22);
-            this.dropdownScale.Text = "toolStripDropDownButton1";
+            this.labelGameStatus.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenInner;
+            this.labelGameStatus.Name = "labelGameStatus";
+            this.labelGameStatus.Size = new System.Drawing.Size(97, 19);
+            this.labelGameStatus.Text = "Resource Details";
             // 
             // lblSpriteColor
             // 
@@ -105,6 +85,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             this.pnlMainDisplay.Name = "pnlMainDisplay";
             this.pnlMainDisplay.Size = new System.Drawing.Size(640, 480);
             this.pnlMainDisplay.TabIndex = 1;
+            this.pnlMainDisplay.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlMainDisplay_Paint);
             // 
             // frmViewResource
             // 
@@ -115,6 +96,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             this.Controls.Add(this.sstripResourceStatus);
             this.Name = "frmViewResource";
             this.Size = new System.Drawing.Size(1094, 592);
+            this.Load += new System.EventHandler(this.frmViewResource_Load);
             this.sstripResourceStatus.ResumeLayout(false);
             this.sstripResourceStatus.PerformLayout();
             this.ResumeLayout(false);
@@ -125,9 +107,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
         #endregion
 
         private System.Windows.Forms.StatusStrip sstripResourceStatus;
-        private System.Windows.Forms.ToolStripStatusLabel lblGameStatus;
-        private System.Windows.Forms.ToolStripStatusLabel labelMagnification;
-        private System.Windows.Forms.ToolStripDropDownButton dropdownScale;
+        private System.Windows.Forms.ToolStripStatusLabel labelGameStatus;
         private System.Windows.Forms.ToolStripStatusLabel lblSpriteColor;
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
         private System.Windows.Forms.Panel pnlMainDisplay;

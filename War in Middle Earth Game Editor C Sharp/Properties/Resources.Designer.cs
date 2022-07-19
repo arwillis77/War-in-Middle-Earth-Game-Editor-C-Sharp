@@ -19,7 +19,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -93,6 +93,26 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap CitadelIcon {
+            get {
+                object obj = ResourceManager.GetObject("CitadelIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap exit {
+            get {
+                object obj = ResourceManager.GetObject("exit", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Floppy_disk3232 {
             get {
                 object obj = ResourceManager.GetObject("Floppy_disk3232", resourceCulture);
@@ -126,6 +146,16 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp.Properties {
         internal static System.Drawing.Bitmap menuarchiveicon {
             get {
                 object obj = ResourceManager.GetObject("menuarchiveicon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap menucopyproticon {
+            get {
+                object obj = ResourceManager.GetObject("menucopyproticon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -207,6 +237,16 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp.Properties {
             get {
                 object obj = ResourceManager.GetObject("wime", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap WIME_Editor_Splash_Screen {
+            get {
+                object obj = ResourceManager.GetObject("WIME Editor Splash Screen", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }

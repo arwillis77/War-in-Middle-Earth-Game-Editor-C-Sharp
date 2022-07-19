@@ -66,6 +66,12 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
         public static string[] IIGS_FILES = new string[] {ANIMS,FINAL1,FINAL2,NEWICONS,OBJECTS,SINGLE,TEXT,TEXT2,TITLE,WORLD};
         public static string[] AMIGA_FILES = new string[] { AANIMS, AMAPS, ASCENE, ATITLE, BSCENE };
         public static string[] ST_FILES = EGA_FILES;
+        /* TILE RESOURCE FILES */
+        public static string[] Tile_Files = new string[] { AMAPS, BFILE, FINAL2, AMAPS, BFILE };
+        public static int[] Tile_Offset = { 43907, 301405, 20, 8038, 8038 };
+
+
+
         /// <summary>
         /// Size of the Resource ID block.
         /// </summary>
@@ -74,6 +80,8 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
         /// Size of the Resource Map block. 
         /// </summary>
         public const int resourceMapBlockSize = 12;                             /* Size of the Resource Map Block */
+
+        
         /* RESOURCE FILE STRUCTURE */
         public ResHeader Header;                                                /* 16 BYTES - FILE HEADER STRUCTURE */
         public ResHeader EndHeader;                                             /* 16 BYTES - FILE END HEADER */

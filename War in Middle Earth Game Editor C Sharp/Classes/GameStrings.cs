@@ -75,49 +75,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp.Classes
             }
         }
     }
-    public class ObjectNameList : GameStringList
-    {
-        public const int ObjectTotal = 16;
-        public static ObjectNameList InitializeObjectNames(FileFormat format)
-        {
-            int ptrStart;
-            int tempval;
-            int p_val = 1;
-            string tempName = "";
-            GameString ons;
-
-            ObjectNameList t_namelist = new ObjectNameList();
-            string EXEName = Utils.GetEXEFilename(format);
-            BinaryReader exeBr = new(File.Open(EXEName, FileMode.Open));
-            ptrStart = GetInventoryOffset(format.Name);
-            exeBr.BaseStream.Position = ptrStart;
-            for (int x = 0; x < ObjectTotal; x++)
-            {
-                ons = new GameString();
-                tempName = "";
-                do
-                {
-                    tempval = exeBr.ReadByte();
-                    if (tempval == 0)
-                        break;
-                    tempName = tempName + (char)tempval;
-                } while (tempval != 0);
-
-                ons.Name = tempName;
-                ons.NameValue = p_val;
-                t_namelist.Add(ons);
-                p_val = (p_val * 2);
-            }
-            exeBr.Close();
-            return t_namelist;
-        }
-        public static int GetInventoryOffset(string formatName)
-        {
-            int result = InventoryOffsets.inventoryoffsets[formatName];
-            return result;
-        }
-    }
-
+    
     public static class InventoryOffsets
     {
         public static Dictionary<string, int> inventoryoffsets = new Dictionary<string, int>();
@@ -142,9 +100,6 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp.Classes
         /// <param name="format">File format of game.  File format determines offset locations.</param>
         /// <returns></returns>
         /// 
-
-
-
 
         public static CharacterNameList InitializeCharacterNames(FileFormat format)
         {
@@ -178,10 +133,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp.Classes
                 t_nameList.Add(cns);
                 ptrStart += os.BlockSize;
                 br.BaseStream.Position = ptrStart;
-             
-
             }
-
             br.Close();
             exeBr.Close();
             return t_nameList;
@@ -270,7 +222,88 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp.Classes
         }
 
     }
-    
+
+    class ArmyMobilize
+    {
+        private Dictionary<int, string> m_mobilized;
+
+        public Dictionary<int, string> Mobilized
+        {
+            get { return m_mobilized; }
+            set { m_mobilized = value; }
+        }
+
+        public ArmyMobilize()
+            {
+            m_mobilized = new Dictionary<int,string>();
+            m_mobilized.Add(0, "EVIL - NO");
+            m_mobilized.Add(1, "GOOD - NO");
+            m_mobilized.Add(3, "STATIONARY NPC - NO");
+            m_mobilized.Add(4, "RANDOM NPC - NO");
+            m_mobilized.Add(40, "SPECIAL CHARACTER - GOLLUM");
+            m_mobilized.Add(99, "GOOD - YES");
+        }
+        public void FillMobilizeCombo(ComboBox cb, int value)
+        {
+            foreach (string name in m_mobilized.Values)
+                cb.Items.Add(name);            
+            cb.Text = GetSelectedMobility(value);
+        }
+        private string GetSelectedMobility(int value)
+        {
+            return m_mobilized[value];
+        }
+    }
+    class Leaders
+    {
+        private Dictionary<int, string> m_characterLeader;
+
+        public Dictionary<int, string> CharacterLeader
+        {
+            get { return m_characterLeader; }
+            set { m_characterLeader = value; }
+        }
+
+        public Leaders(CharacterNameList cn)
+        {
+            m_characterLeader = new Dictionary<int, string>();
+            m_characterLeader.Add(0, "NONE");
+            for (int a = 1; a < cn.Count; a++)
+                m_characterLeader.Add(a, cn[a-1].Name);
+        }
+
+        public string  GetLeaderName(int key)
+        {
+            return m_characterLeader[key];
+        }
+        public int GetLeaderValue(string leaderName)
+        {
+            int result=0;
+            int count = 0;
+            foreach(string name in m_characterLeader.Values)
+            {
+                if (name == leaderName)
+                    result = count;
+                else
+                    count++;
+            }
+            return result;
+        }
+
+        public void InitializeLeaderData(ComboBox arcCombo, int value)
+        {
+            foreach (string item in m_characterLeader.Values)
+                arcCombo.Items.Add(item);
+            arcCombo.Text = GetSelectedLeader(value);
+        }
+        private string GetSelectedLeader(int value)
+        {
+            return m_characterLeader[value];
+        }
+
+
+    }
+
 }
 
 

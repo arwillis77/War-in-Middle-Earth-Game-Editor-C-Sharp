@@ -21,23 +21,22 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp.Classes
         }
 
         private string m_filename;
-        private BinaryReader m_Savegame;
+        private BinaryReader m_savegame;
         private int m_blocklength;
         private int m_filestartpos;       
         private FileFormat m_format;
         private CharacterBlock m_characterblock;
-
 
         public string Filename
         {
             get { return m_filename; }
             set { m_filename = value; }
         }
-        public BinaryReader SaveGame;
-        //{
-        //    get { return m_Savegame; }  
-        //    set { m_Savegame = value; }
-        //}
+        public BinaryReader SaveGame
+        {
+            get { return m_savegame; }  
+            set { m_savegame = value; }
+        }
         public int FileStartPointer
         {
             get { return m_filestartpos; }  
@@ -58,21 +57,19 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp.Classes
             get { return m_characterblock; }
             set { m_characterblock = value; }
         }
-     
-
         public Archive(FileFormat gameFormat, int index)
         {
-            Filename = Utils.GetFullFilename(ARCHIVEFILE);
-            SaveGame = new BinaryReader(File.Open(Filename, FileMode.Open));
-            Format = gameFormat;
-            BlockLength = GetBlockLength();
-            FileStartPointer = BlockLength + (index * BlockLength);
-            SelectedCharacter = new CharacterBlock(SaveGame, FileStartPointer);
+            m_filename = Utils.GetFullFilename(ARCHIVEFILE);
+            m_savegame = new BinaryReader(File.Open(m_filename, FileMode.Open));
+            m_format = gameFormat;
+            m_blocklength = GetBlockLength();
+            m_filestartpos = m_blocklength + (index * m_blocklength);
+            m_characterblock = new CharacterBlock(m_savegame, m_filestartpos);
         }
         public struct CharacterBlock
         {
             public UInt16 NameCode;                                 /* 4-Byte unsigned short integer. NameCode: Stores value associated with character name string */
-            public UInt16 unknown;                                  /* 4-Byte unsigned short int.  Unknown. */
+            public UInt16 Bytes3and4;                                  /* 4-Byte unsigned short int.  Unknown. */
             public UInt16 ArmyTotal;                                /* 4-byte unsigned short int.   */
             public UInt16 ArmyQuantity;
             public Position Location;
@@ -101,7 +98,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp.Classes
             {
                 bf.BaseStream.Position = filePointer;
                 this.NameCode = bf.ReadUInt16();
-                this.unknown = bf.ReadUInt16();
+                this.Bytes3and4 = bf.ReadUInt16();
                 this.ArmyTotal = bf.ReadUInt16();
                 this.ArmyQuantity = bf.ReadUInt16();
                 this.Location.x = bf.ReadUInt16();
@@ -138,7 +135,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp.Classes
         int GetBlockLength()
         {
             int result;
-            if (Format.Endian == 0)
+            if (m_format.Endian == 0)
                 result = (int)BlockSize.LittleEndian;
             else
                 result = (int)BlockSize.BigEndian;
@@ -149,8 +146,6 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp.Classes
         {
             int result = blockLength * index;
             return result;
-
-
         }
 
 

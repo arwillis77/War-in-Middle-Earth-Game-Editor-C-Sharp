@@ -78,8 +78,10 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             currentFormat = Constants.GetFormatData(cfg.GameExecutable);
             GameLoaded = true;
             characternamelist = CharacterNameList.InitializeCharacterNames(currentFormat);
+            Form newform = new frmStringDisplay(characternamelist);
+            newform.Show();
             citynamelist = CityNameList.InitializeCityNames(currentFormat);
-            objectnamelist = ObjectNameList.InitializeObjectNames(currentFormat);
+            //objectnamelist = ObjectNameList.InitializeObjectNames(currentFormat);
             LoadGame();
         }
 

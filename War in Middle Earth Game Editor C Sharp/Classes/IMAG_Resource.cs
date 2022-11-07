@@ -16,29 +16,101 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
     {
         const int PaletteSize = 32;
         const int Max_Num_Bitplanes = 32;
-        public IMAGHeader ih;
-        public Palette[] IMAG_Palette;
-        public byte[] chunkData;
+        public int Height
+        {
+            get { return this.m_header.height; }
+            set { this.m_header.height = (byte)value; }
+        }
+        public int Width
+        {
+            get { return this.m_header.width; }
+            set { this.m_header.width=(ushort)value; }
+        }
+        public int BitPlanes
+        {
+            get { return this.m_header.bitPlane; }
+            set { this.m_header.bitPlane = (byte)value; }
+
+        }
+        public int ImagePlane
+        {
+            get { return this.m_header.plane; }
+            set { this.m_header.plane = (byte)value; }
+
+        }
+        public long ImageDataStart
+        {
+            get { return this.m_header.imageStart; }
+            set { this.m_header.imageStart = value; }
+        }
+        public uint UncompressedDataSize
+        {
+            get { return this.m_header.uncmpSize; }
+            set { this.m_header.uncmpSize = (uint)value; }
+        }
+
+        public byte Byte10
+        {
+            get { return this.m_header.unk2; }
+            set { this.m_header.unk2 = (byte)value; }
+        }
+        public byte Byte11
+        {
+            get { return this.m_header.unk3; }
+            set { this.m_header.unk3 = (byte)value; }
+        }
+        public byte Byte15
+        {
+            get { return this.m_header.unk6; }
+            set { this.m_header.unk6 = (byte)value; }
+        }
+
+        public byte[] Data
+        {
+            get { return this.m_uImageData; }
+            set { this.m_uImageData = value; }
+
+        }
+        public IMAGHeader ImageHeader
+        {
+            get { return this.m_header; }
+            set { m_header = value; }
+
+        }
+       
+
+        private IMAGHeader m_header;                        /* Header for IMAG Resource */
+        private Palette[] m_palette;                        /* Palette array */
+        private byte[] m_imageData;                         /* Compressed image data */
+        private byte[] m_uImageData;                        /* Uncompressed image data array */
+        private ByteRunUnpack unpack;
+        //public IMAGHeader ih;
+        //public Palette[] IMAG_Palette;
+        //public byte[] chunkData;
+
+       
+        /* Default constructor */
         public IMAG_Resource()
         {
         }
-        public IMAG_Resource (BinaryReader br, int offset, int paletteIndex)
+        public IMAG_Resource (BinaryReader br, int offset, int [] paletteIndex)
         {
-            this.ih = new IMAGHeader(br,offset);
-            int t_size = (int)this.ih.compSize - (this.ih.rawStartOffset-4);
-            //MessageBox.Show(t_size.ToString(), "Chunk Size!");
-
+            m_header = new IMAGHeader(br,offset);
+            //MessageBox.Show("Header Info -- Height "+ m_header.height+ " Width "+ m_header.width);
+            int t_size = (int)m_header.compSize - (m_header.rawStartOffset-4);
             if (t_size <= 0)
                 MessageBox.Show("Size of Chunk is Zero!","ChunkData Error in IMAG_Resource");
-            br.BaseStream.Position = this.ih.imageStart;
-            this.chunkData = br.ReadBytes(t_size);
-
-            //this.chunkData = unpack.IMAG_unpackByteRun(this);
-            WriteChunkFile(this.chunkData, offset);
-            this.IMAG_Palette = new Palette[PaletteSize];
-            //IMAG_Palette = Palette.SetPalette(paletteIndex);
-
+            br.BaseStream.Position = this.m_header.imageStart;
+            m_imageData = br.ReadBytes(t_size);
+            unpack = new ByteRunUnpack(br, m_header);
+            m_uImageData = unpack.UnPackArray(m_imageData);
+            WriteChunkFile(m_uImageData, offset);
+            m_palette = new Palette[PaletteSize];
         }
+
+
+
+
         public static uint calculateRowSize(int width)
         {
             uint rowSizeinWords = (uint)width / 16;

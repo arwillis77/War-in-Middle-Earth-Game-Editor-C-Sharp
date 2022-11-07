@@ -9,6 +9,9 @@ using War_in_Middle_Earth_Game_Editor_C_Sharp.Classes;
 
 namespace War_in_Middle_Earth_Game_Editor_C_Sharp
 {
+ /// <summary>
+ /// FileFormat class - Organizes data for specific file format to include EXE filename, Endian data, etc.
+ /// </summary>
     public class FileFormat
     {
         public string Name;

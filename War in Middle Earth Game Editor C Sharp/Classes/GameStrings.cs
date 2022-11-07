@@ -25,6 +25,10 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp.Classes
             get { return name; }
             set { name = value; }
         }
+
+
+    
+
         public GameString()
         {
             namevalue = 0;
@@ -74,6 +78,10 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp.Classes
                 BlockSize = bs;
             }
         }
+      
+
+
+
     }
     
     public static class InventoryOffsets
@@ -100,7 +108,22 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp.Classes
         /// <param name="format">File format of game.  File format determines offset locations.</param>
         /// <returns></returns>
         /// 
+        public CharacterNameList()
+        {
+            
 
+
+        }
+
+        public int GetNamePointer(string fileName, int filePtr)
+        {
+            int result;
+            string filename = Utils.GetFullFilename(fileName);
+            BinaryReader br = new(File.Open(filename, FileMode.Open));
+            br.BaseStream.Position = filePtr;
+            result = br.ReadUInt16();
+            return result;
+        }
         public static CharacterNameList InitializeCharacterNames(FileFormat format)
         {
             int x;     

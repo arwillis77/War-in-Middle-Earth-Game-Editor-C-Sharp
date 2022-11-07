@@ -5,26 +5,32 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace War_in_Middle_Earth_Redux
+namespace War_in_Middle_Earth_Game_Editor_C_Sharp
 {
     public class IMemory
     {
-        public byte[] buffer;
+        private byte[] m_buffer;
+
+        public byte[] Buffer
+        {
+            get { return m_buffer; }
+            set { m_buffer = value; }
+        }
 
         public IMemory(byte [] IData)
         {
-            int dSize;
-            dSize = IData.Length;
-            this.buffer = new byte[dSize];
-            this.buffer = IData;
+            //int dSize;
+            //dSize = IData.Length;
+            //this.m_buffer = new byte[dSize];
+            m_buffer = IData;
         }
 
         public byte GetMemByte(int Address)
         {
-            if (!(buffer == null))
+            if (!(m_buffer == null))
             {
-                if (Address < buffer.Length)
-                    return buffer[Address];
+                if (Address < m_buffer.Length)
+                    return m_buffer[Address];
                 else
                     return 0;
             }
@@ -35,7 +41,7 @@ namespace War_in_Middle_Earth_Redux
             }
         }
 
-        public static bool GetBit(int Number, byte index)
+        public  bool GetBit(int Number, byte index)
         {
             return (Number & (1 << index)) > 0;
         }
@@ -43,10 +49,10 @@ namespace War_in_Middle_Earth_Redux
         public static void SetBit(ref byte number, byte index, bool value)
         {
             if (value == true)
-            {
+            
                 number = (byte)(number | (1 << index));
-            }
-            number = (byte)(number & ~(1 << index));
+            else
+                number = (byte)(number & ~(1 << index));
         }
     }
 }

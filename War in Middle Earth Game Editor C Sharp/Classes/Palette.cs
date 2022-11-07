@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace War_in_Middle_Earth_Game_Editor_C_Sharp
 {
@@ -227,6 +228,41 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             get { return blue; }
             set { blue = value; }
         }
+
+
+
+        public static Palette[] SetIMAGPalette (int[] indexSet,int colors, FileFormat frmt)
+        {
+            int a;
+            Palette[] p_pal = null;
+            Palette p=null;
+            //int[] p_index = new int[colors];
+            p_pal = new Palette[colors];
+            int val;
+            
+
+            for (a = 0; a < colors; a++)
+            {
+                val = indexSet[a];
+                if (frmt.Name == Constants.PC_VGA_FORMAT)
+                {
+                    p = new Palette(game_pal[val, 0], game_pal[val, 1], game_pal[val, 2]);
+                    //MessageBox.Show("Palette Color#"+ a +" " + game_pal[val, 0].ToString()+ game_pal[val, 1].ToString() + game_pal[val, 2].ToString());
+                }
+                else if (frmt.Name == Constants.IIGS_FORMAT)
+                {
+                    p = new Palette(IIGSPal[val, 0], IIGSPal[val, 1], IIGSPal[val, 2]);
+                }
+                else if (frmt.Name == Constants.PC_EGA_FORMAT)
+                {
+                    p = new Palette(egaPal[val, 0], egaPal[val, 1], egaPal[val, 2]);
+                }
+                p_pal[a] = p;
+            }
+            return p_pal;
+        }
+
+
         public static Palette[] SetPalette(int [] indexSet, int Index, int colors)
         {
             int a;           
@@ -237,6 +273,8 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
                 case 0:        // Title
                     p_index = FillIndex(indexSet);
                     break;
+               case 1:
+
                 default:
                     break;
             }
@@ -261,6 +299,92 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
                 p_index[a] = pal[a];
             return p_index;
         }
+
+        public static int [] GetImagePalette (FileFormat ff,string res)
+        {
+            int[] result = null;
+            switch(ff.Name)
+            {
+                case Constants.PC_VGA_FORMAT:
+                    {
+                        switch(res)
+                        {
+                            case "ATITLE":
+                                result = Palette.vgatitle;
+                                break;
+                            case "ASCENE":
+                                result = Palette.vgaascene;
+                                MessageBox.Show("VGASCENE!");
+                                break;
+                            case "BSCENE":
+                                result = Palette.vgabscene;
+                                break;
+                            case "BOBJECTS":
+                                result = Palette.vgabscene;
+                                break;
+                            case "AMAPS":
+                                result = Palette.vgaamap;
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
+                    }
+                case Constants.PC_EGA_FORMAT:
+                    {
+                        result = Palette.vgaamap;
+                        break;
+                    }
+                case Constants.IIGS_FORMAT:
+                    {
+                        switch(res)
+                        {
+                            case "TITLE":
+                                result = Palette.gstitle;
+                                break;
+                            default:
+                                result = Palette.vgaamap;
+                                break;
+                        }
+                        break;
+                    }
+                case Constants.AMIGA_FORMAT:
+                    {
+                        switch(res)
+                        {
+                            case "ATITLE":
+                                result = Palette.amigatitle;
+                                break;
+                            default:
+                                result = Palette.amigascene;
+                                break;
+                        }
+                        break;
+                    }
+                default:
+                    switch (res)
+                    {
+                        case "ATITLE":
+                            result = Palette.vgatitle;
+                            break;
+                        case "ASCENE":
+                            result = Palette.vgaascene;
+                            break;
+                        case "BSCENE":
+                            result = Palette.vgabscene;
+                            break;
+                        default:
+                            result = Palette.vgaascene;
+                            break;
+                    }
+                    break;
+
+            }
+            if (result == null)
+                MessageBox.Show("Null Error for SetPalette");
+            return result;
+        }
+        
         public static GamePalettesIndex InitializePalette(string name)
         {
             string format = name;
@@ -269,7 +393,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             {
                 palIndex.atitle = Palette.vgatitle;
                 palIndex.ascene = Palette.vgaascene;
-                palIndex.bscene = Palette.vgabscene;
+                palIndex.bscene = Palette.vgabscene;               
                 palIndex.amap = Palette.vgaamap;
                 palIndex.tile = Palette.vgatile;
                 palIndex.defaultSprite = Palette.defaultsprite;

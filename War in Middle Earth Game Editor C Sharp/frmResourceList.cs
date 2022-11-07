@@ -134,7 +134,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             SelectedItem = new ResourceViewData();
             SelectedItem.Name = listResourceItems.SelectedItems[0].SubItems[0].Text;
             SelectedItem.Type = listResourceItems.SelectedItems[0].SubItems[3].Text;
-            SelectedItem.ResourceNumber = Convert.ToInt16(listResourceItems.SelectedItems[0].SubItems[1].Text);
+            SelectedItem.ResourceNumber = Convert.ToInt32(listResourceItems.SelectedItems[0].SubItems[1].Text);
             SelectedItem.DataSize = Convert.ToUInt32(listResourceItems.SelectedItems[0].SubItems[2].Text);
             SelectedItem.FileName = listResourceItems.SelectedItems[0].SubItems[4].Text;
             SelectedItem.Offset = Convert.ToInt32(listResourceItems.SelectedItems[0].SubItems[5].Text);

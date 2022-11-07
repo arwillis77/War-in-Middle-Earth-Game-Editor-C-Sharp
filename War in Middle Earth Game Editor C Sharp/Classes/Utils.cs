@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -100,9 +101,31 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp.Classes
             return result;
         }
 
+        public static int GetCanvassWidth(int clipWidth)
+        {
+            int mod;
+            int result;
+            mod = clipWidth % 16;
+            result = (clipWidth / 16) * 16;
+            if (mod > 0)
+                result = result + 16;
+            return result;
+        }
 
+        public static Rectangle GetDrawingRectangle(int x, int y, int scale)
+        {
+            Rectangle Result = new Rectangle();
+            
+            int tempModifier = scale;
+            if (scale < 1)
+                scale = 1;
+            Result.X = x * tempModifier;
+            Result.Y = y * tempModifier;
+            Result.Width = tempModifier;
+            Result.Height = tempModifier;
+            return Result;
+        }
 
-   
 
         public struct Coordinates
         {

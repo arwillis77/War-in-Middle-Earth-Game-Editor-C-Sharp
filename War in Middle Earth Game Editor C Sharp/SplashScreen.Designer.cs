@@ -54,7 +54,7 @@
             // splitContainer1.Panel1
             // 
             this.splitContainer1.Panel1.BackgroundImage = global::War_in_Middle_Earth_Game_Editor_C_Sharp.Properties.Resources.WIME_Editor_Splash_Screen;
-           
+            this.splitContainer1.Panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             // 
             // splitContainer1.Panel2
             // 
@@ -85,7 +85,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(496, 150);
-            this.tableLayoutPanel1.TabIndex = 0;            
+            this.tableLayoutPanel1.TabIndex = 0;
             // 
             // progressBarSplash
             // 
@@ -167,7 +167,6 @@
             this.Name = "SplashScreen";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SplashScreen";
-
             this.Shown += new System.EventHandler(this.SplashScreen_Shown);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();

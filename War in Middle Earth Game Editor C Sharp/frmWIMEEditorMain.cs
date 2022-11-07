@@ -256,7 +256,6 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
         }
         private void toolStripComboBoxScale_SelectedIndexChanged(object sender, EventArgs e)
         {
-
             if (GameLoaded==false)
                 return;
             Config m_cfg = new Config(true);

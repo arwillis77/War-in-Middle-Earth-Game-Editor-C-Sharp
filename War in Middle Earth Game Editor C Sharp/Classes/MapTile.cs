@@ -21,6 +21,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp.Classes
         static public int PaletteSize = 16;
         static public int TileSize = 16;
         List<TileResource> tileOffsetSet;
+       
         private int[] tilePalette;
         private int tileOffset;
         private string tileFile;
@@ -28,10 +29,10 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp.Classes
         private List<byte[]> m_tileSet;
 
         /*  Constructor */
-        public MapTile(int[] palette)
+        public MapTile()
         {
             InitializeTileOffsetValues();
-            tilePalette = palette;
+            tilePalette = GetTilePalette();
             tileOffset = GetTileOffset();
             tileFile = GetTileFile();
             string fullname = Utils.GetFullFilename(tileFile);
@@ -84,6 +85,16 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp.Classes
             tileReader.Close();
             return result;
         }
+
+
+
+        public int[] GetTilePalette()
+        {
+            int[] result;
+            FileFormat ff = Utils.GetCurrentFormat();
+            result = Palette.GetTilePalette(ff);
+            return result;
+        }
         public int GetTileOffset()
         {
             int m_offset;
@@ -113,14 +124,9 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp.Classes
                 BinaryFile.Nibbler(bPix, ref value1, ref value2);
                 result[arrayIt++] = value1;
                 result[arrayIt++] = value2;
-
             }
-
             return result;
         }
-
-
-  
     }
     public class TileResource
     {

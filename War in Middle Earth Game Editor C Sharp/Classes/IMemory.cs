@@ -10,7 +10,6 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
     public class IMemory
     {
         private byte[] m_buffer;
-
         public byte[] Buffer
         {
             get { return m_buffer; }

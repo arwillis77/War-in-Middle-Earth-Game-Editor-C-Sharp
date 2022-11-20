@@ -84,15 +84,12 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp.Classes
             }
             return result;
         }
-
-     
         public static class Offsets
         {
             public static int[] CityDataBlockStart = new int[] { 112565, 131117, 105706, 131010, 124828 };
             public static int[] CityDataBlockSize = new int[] { 9, 9, 9, 10, 10 };
             public static int[] PointerDifference = new int[] { 93300, 93300, 95598, 40, 4 };
         }
-
         public static string Default = "HINTERLAND";
 
     }
@@ -115,20 +112,6 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp.Classes
         {
             blocks.Add(block);
         }
-
-        public CityBlocks InitializeCityData(FileFormat format)
-        {
-           
-            City.CityBlock cityblock;
-            CityBlocks cityblocks = new CityBlocks();
-
-
-            return cityblocks;
-        }
-
-
-
-
 
     }
 }

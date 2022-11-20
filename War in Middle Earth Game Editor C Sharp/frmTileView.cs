@@ -18,6 +18,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
   */
     public partial class frmTileView : UserControl
     {
+        private static int[] ScaleValues = { 1, 2, 3, 16};              /* Values for scaling graphics */
         public static int TileSize = 16;                                /* Size of tiles in pixels.  16x16 */
         private Palette [] m_tilePalette;                               /* Palette array. */
         private ResourceViewData m_loadedresource;                      /* Contains summary data for individual resource selected */
@@ -26,6 +27,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
         private int m_paletteSize;                                      /* Number of color palette entries */
         private int m_tileNum;                                          /* Index of tile in tilemap set */
         private MapTile m_maptile;                                      /* Maptile object */
+        public bool formLoaded;
        
         public ResourceViewData loadedResource
         {
@@ -56,11 +58,24 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             m_tilePalette = GetTilePalette(mt.TilePalette);
             m_tileNum = index;
             m_maptile = mt;
+            formLoaded = false;
 
             panelTileView.Size = new Size(TileSize * m_scale, TileSize * m_scale);
             panelTileView.BackgroundImage = null;
 
         }
+
+
+        private void FillScales()
+        {
+            foreach (int v in ScaleValues)
+            {
+                comboBoxImageScale.Items.Add(v);
+
+            }
+            comboBoxImageScale.Text = m_scale.ToString();
+        }
+
 
         /// <summary>
         /// GetTilePalette - Populates palette array using index array to select individual colors from game palettes
@@ -72,18 +87,19 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             Palette [] pal;
             int palSize = palette.Count();
             pal = Palette.SetPalette(palette, 0, palSize);
-            m_tilePalette = Palette.SetPalette(palette, 0, palSize);
             return pal;
         }
 
         private void frmTileView_Load(object sender, EventArgs e)
         {
-            string Status = loadedResource.Name + ", " + loadedResource.DataSize + " bytes, " + loadedResource.FileName + ".RES " + " (" + loadedResource.Offset + ")";
-         
-            LabelGameStatus.Text = Status;
+                       
+            FillScales();
+            formLoaded = true;
         }
         private void panelTileView_Paint(object sender, PaintEventArgs e)
         {
+            if (formLoaded == false)
+                return;
             var p = sender as Panel;
             var g = e.Graphics;
             byte[] tileChunk = m_maptile.MapTileSet[m_tileNum];
@@ -108,7 +124,13 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             }
         }
 
- 
-
+        private void comboBoxImageScale_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (formLoaded == false)
+                return;
+            m_scale = (int)comboBoxImageScale.SelectedItem;
+           panelTileView.Size = new Size(TileSize, TileSize);
+            Utils.RefreshPanel(ref panelTileView,m_scale);
+        }
     }
 }

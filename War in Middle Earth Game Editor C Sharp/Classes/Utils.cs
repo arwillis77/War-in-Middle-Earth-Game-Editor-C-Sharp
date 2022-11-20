@@ -112,13 +112,22 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp.Classes
             return result;
         }
 
+
+        public static void RefreshPanel(ref Panel pnl, int scale)
+        {
+            pnl.Controls.Clear();
+            pnl.Size = new Size(pnl.Width*scale, pnl.Height*scale);
+            pnl.Invalidate();
+            pnl.Refresh();
+
+        }
         public static Rectangle GetDrawingRectangle(int x, int y, int scale)
         {
             Rectangle Result = new Rectangle();
             
             int tempModifier = scale;
-            if (scale < 1)
-                scale = 1;
+            if (tempModifier < 1)
+                tempModifier = 1;
             Result.X = x * tempModifier;
             Result.Y = y * tempModifier;
             Result.Width = tempModifier;

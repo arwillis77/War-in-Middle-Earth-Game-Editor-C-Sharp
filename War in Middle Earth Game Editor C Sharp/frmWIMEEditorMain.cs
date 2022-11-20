@@ -20,7 +20,6 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
         private int[] scaleValues = { 1, 2, 3 };
         public string[] GameFiles;
         private MapTile m_mapTile;
-        private GamePalettesIndex m_gpi;
         private int m_scale;
         public int imageScale
         {
@@ -32,7 +31,6 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
         List<TabPage> GameTabs;
         FileFormat currentFormat;        
         CharacterNameList characternamelist;
-        ObjectNameList objectnamelist;
         CityNameList citynamelist;
         ImageList ResourceImages;
         private Image [] m_tabImages;
@@ -43,9 +41,9 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
         public frmWIMEEditorMain()
         {
             InitializeComponent();
-            for (int x = 0; x < scaleValues.Count(); x++)
-                this.toolStripComboBoxScale.Items.Add(scaleValues[x].ToString());
-            m_scale = 1;
+            toolStrip1.Renderer = new ToolStripOverride();
+           
+        
             //resourceTabs = new TabControl();
             m_tabImages = new Image[] {
                 War_in_Middle_Earth_Game_Editor_C_Sharp.Properties.Resources.menutileicon,
@@ -78,10 +76,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             currentFormat = Constants.GetFormatData(cfg.GameExecutable);
             GameLoaded = true;
             characternamelist = CharacterNameList.InitializeCharacterNames(currentFormat);
-            Form newform = new frmStringDisplay(characternamelist);
-            newform.Show();
             citynamelist = CityNameList.InitializeCityNames(currentFormat);
-            //objectnamelist = ObjectNameList.InitializeObjectNames(currentFormat);
             LoadGame();
         }
 
@@ -90,7 +85,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
            
             string title = string.Concat(Constants.Program_Name, " ", Constants.Program_Version, " ", Constants.ProgramDate);
             this.Text = title;
-            toolStripComboBoxScale.Text = imageScale.ToString();
+           
             //cfg = new Config();
             //if (cfg.ConfigPresent)
             //{
@@ -109,7 +104,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             frmResourceList p_form;
             LoadedResourceList = ResourceList.InitializeResourceList(currentFormat);                /* Intializes list of all resources for the file format */
             LoadedArchiveList = ResourceList.InitializeArchive(currentFormat, characternamelist);   /* Initializes list of archive characters */
-            m_gpi = Palette.InitializePalette(currentFormat.Name);
+            
             ResourceImages = new ImageList   
             {
                 ImageSize = new Size(16, 16),
@@ -167,14 +162,11 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
         }
         private void ExportMapTiles()
         {
-
-            m_mapTile = new MapTile(m_gpi.tile);
+            m_mapTile = new MapTile();
             if (m_mapTile == null)
             {
                 MessageBox.Show("MapTile is null", "Null Error!");
-
             }
-
             Form p_form = new frmExportTile(m_mapTile, imageScale);
             p_form.Show();
         }
@@ -254,19 +246,21 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
         {
             clickOpenWIMEGame();
         }
-        private void toolStripComboBoxScale_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (GameLoaded==false)
-                return;
-            Config m_cfg = new Config(true);
 
-            int scaleVal = 0;
-            string result = toolStripComboBoxScale.Text;
-            scaleVal = Convert.ToInt16(result);
-            imageScale = scaleVal;
-            m_cfg.Scale = scaleVal;
-            m_cfg.WriteConfig(m_cfg.GameDirectory, m_cfg.GameExecutable, m_cfg.Scale);
+        private void PanelEditor_Paint(object sender, PaintEventArgs e)
+        {
+
         }
+
+        private void menuItemShowMenuBar_Click(object sender, EventArgs e)
+        {
+            if(menuItemShowMenuBar.Checked == true)
+            {
+                menuItemShowMenuBar.Checked = false;
+                menuStrip1.Visible = false;
+            }
+        }
+
 
     }
 }

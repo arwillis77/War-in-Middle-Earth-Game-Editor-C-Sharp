@@ -21,7 +21,6 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
     
     public partial class frmResourceList : UserControl
     {
-
         UserControl ResourceForm;
         string ResourceType;
         public ListView ListResourceItems;
@@ -29,20 +28,6 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
         public ResourceList SelectedResource;
         public ResourceViewData SelectedItem;                       /* Individual Resource ITem */
         public string SelectedResourceItemType;
-        private  GamePalettesIndex gpi;
-
-
-        public GamePalettesIndex SelectedPaletteSet
-            { 
-                get { return gpi; } 
-                set 
-                { 
-                    FileFormat currentFormat = Utils.GetCurrentFormat();
-                    gpi = Palette.InitializePalette(currentFormat.Name);
-                } 
-            }
-
-
         public MapTile mt;
         /// <summary>
         /// Default constructor for the ResourceList form 
@@ -62,7 +47,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             this.ResourceType = resource;
             this.SelectedResource = rdata;
             this.SelectedResourceItemType = "";
-            this.SelectedPaletteSet = gpi;
+
             this.Dock = DockStyle.Fill;
         }
 
@@ -86,7 +71,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
 
         private void InitializeMapTiles()
         {
-            mt = new MapTile(gpi.tile);
+            mt = new MapTile();
 
         }
 
@@ -131,15 +116,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             TabPage Page;
             if (listResourceItems.SelectedItems.Count == 0)
                 return;
-            SelectedItem = new ResourceViewData();
-            SelectedItem.Name = listResourceItems.SelectedItems[0].SubItems[0].Text;
-            SelectedItem.Type = listResourceItems.SelectedItems[0].SubItems[3].Text;
-            SelectedItem.ResourceNumber = Convert.ToInt32(listResourceItems.SelectedItems[0].SubItems[1].Text);
-            SelectedItem.DataSize = Convert.ToUInt32(listResourceItems.SelectedItems[0].SubItems[2].Text);
-            SelectedItem.FileName = listResourceItems.SelectedItems[0].SubItems[4].Text;
-            SelectedItem.Offset = Convert.ToInt32(listResourceItems.SelectedItems[0].SubItems[5].Text);
-           
-
+            SelectedItem = new ResourceViewData(listResourceItems);
             if (SelectedItem.Type == "SAVEGAME")
             {
                 ResourceForm = new frmArchiveView(SelectedItem);
@@ -150,18 +127,12 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
                     InitializeMapTiles();
                 Config cfg = new Config(true);
                 ResourceForm = new frmTileView(SelectedItem,mt,cfg.Scale, SelectedItem.ResourceNumber);
-            }
-                    
-                    
+            }       
             else
             {
                 ResourceForm = new frmViewResource(SelectedItem, 3);
             }
-
-            //splitResourceContainer.Panel2.Controls.Add(ResourceForm);
-
             ResourceForm.Dock = DockStyle.Fill;
-
             if (TabDisplay)
             {
                 Page = new TabPage();
@@ -171,8 +142,6 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             }
             else
             {
-                
-
                 splitResourceContainer.Panel2.Controls.Clear();
                 splitResourceContainer.Panel2.Controls.Add(ResourceForm);
             }

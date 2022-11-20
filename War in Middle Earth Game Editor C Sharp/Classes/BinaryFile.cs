@@ -10,13 +10,12 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp.Classes
     internal class BinaryFile: FileStream
     {
         private readonly string MemFilename;
-        private readonly FileStream MemFile;
+        //private readonly FileStream MemFile;
 
         public BinaryFile(string filename, FileMode mode = FileMode.OpenOrCreate) : base(filename, mode)
         {
             MemFilename = filename;
         }
-
 
         /* ReadByteUnsigned, WriteByte - reads of writes an unsigned byte and increments the position property by 1.*/
         public byte ReadByteUnsigned()
@@ -53,22 +52,10 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp.Classes
         /// <param name="secondByte">Second byte value of Right Byte.  Reference value. </param>
         public static void Nibbler(byte value, ref byte firstByte,ref byte secondByte)
         {
-            //byte MSB;
-            //byte LSB
-            
             int MSB = (value >> 4) & 0x0F;
             int LSB = value & 0x0F;
             firstByte = (byte)MSB;
             secondByte = (byte)LSB;
-
-
-
-            //string byteLeft,byteRight;
-            //string hexVal = value.ToString("X");
-            //byteLeft = hexVal.Substring(0, 1);
-            //byteRight = hexVal.Substring(1, 1);
-            //firstByte = Convert.ToByte(byteLeft, 16);
-            //secondByte = Convert.ToByte(byteRight, 16); 
         }
 
     }

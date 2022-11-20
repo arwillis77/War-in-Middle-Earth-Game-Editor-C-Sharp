@@ -15,7 +15,6 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
     public class Config
     {
         const string CONFIG_FILE = "wimeed.cfg";
-
         private string m_gameDirectory;
         private string m_gameExecutable;
         private int m_scale;
@@ -32,7 +31,6 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             get { return m_scale; }
             set { m_scale = value; }
         }
-
 
         public string GameDirectory
         {
@@ -52,7 +50,6 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             this.m_gameDirectory = directory;
             this.GameExecutable = filename;
         }
-
         public Config(bool read)
         {
             if (read)
@@ -63,9 +60,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             }
             else
                 return;
-
         }
-
         /// <summary>
         /// Checks for existing configuration file.
         /// </summary>
@@ -93,8 +88,6 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
                 confile.Close();
             }
         }
-
-
         private int GetScaleValue()
 
         {

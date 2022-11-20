@@ -116,7 +116,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
                         {0xFF,0x55,0x55},
                         {0xFF,0xFF,0x55}
         };
-        private static byte[,] egaPal = new byte[,]
+        private static readonly byte[,] egaPal = new byte[,]
        {
             /* 0 */     {0x00, 0x00, 0x00}, 
             /* 1 */     {0x00, 0x00, 0xAA}, 
@@ -136,7 +136,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             /* 15 */    {0xFF,0xFF,0xFF}
        };
         /* APPLE IIGS PALETTE */
-        private static byte[,] IIGSPal = new byte[,]
+        private static readonly byte[,] IIGSPal = new byte[,]
             {
                 /* 00 */    {0x00,0x00,0x00 },
                 /* 01 */    {0xDD,0xCC,0xAA },
@@ -193,19 +193,19 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
                 /* 52 */    {0xCB,0x00,0x41 }
             };
 
-        static int[] vgatitle = { 0, 16, 17, 18, 19, 20, 21, 22, 23, 24, 2, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45 };
-        static int[] vgaascene = { 0, 46, 55, 56, 48, 49, 50, 51, 52, 53, 69, 70, 71, 57, 58, 59, 60, 61, 47, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74 };
-        static int[] vgabscene = { 0, 46, 55, 56, 48, 49, 50, 51, 52, 61, 54, 55, 56, 57, 58, 59, 60, 61, 47, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74 };
-        static int[] vgaamap = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
-        static int[] vgatile = { 0, 8, 6, 7, 10, 13, 3, 1, 2, 9, 14, 12, 10, 0, 4, 15 };
-        static int[] defaultsprite = { 0, 46, 14, 12, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 47, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74 };
+        static readonly int[] vgatitle = { 0, 16, 17, 18, 19, 20, 21, 22, 23, 24, 2, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45 };
+        static readonly int[] vgaascene = { 0, 46, 55, 56, 48, 49, 50, 51, 52, 53, 69, 70, 71, 57, 58, 59, 60, 61, 47, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74 };
+        static readonly int[] vgabscene = { 0, 46, 55, 56, 48, 49, 50, 51, 52, 61, 54, 55, 56, 57, 58, 59, 60, 61, 47, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74 };
+        static readonly int[] vgaamap = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
+        static readonly int[] vgatile = { 0, 8, 6, 7, 10, 13, 3, 1, 2, 9, 14, 12, 10, 0, 4, 15 };
+        static readonly int[] defaultsprite = { 0, 46, 14, 12, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 47, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74 };
 
-        static int[] gstitle = { 0, 1, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44 };
-        static int[] gsdefaultsprite = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 0, 44, 2, 1, 53, 45, 46, 47, 48, 49, 7, 50, 51, 52, 8, 0 };
+        static readonly int[] gstitle = { 0, 1, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44 };
+        static readonly int[] gsdefaultsprite = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 0, 44, 2, 1, 53, 45, 46, 47, 48, 49, 7, 50, 51, 52, 8, 0 };
 
-        static int[] amigatitle = { 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46 };
-        static int[] amigascene ={47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 57, 58, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77};
-        static int[] amigadefeaultsprite = { 0, 68, 76, 48, 51, 52, 53, 58, 55, 56, 57, 47, 71, 67, 60, 76, 61, 62, 63, 64, 65, 62, 67, 68, 78, 70, 71, 72, 73, 74, 75, 54 };
+        static readonly int[] amigatitle = { 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46 };
+        static readonly int[] amigascene ={47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 57, 58, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77};
+        static readonly int[] amigadefeaultsprite = { 0, 68, 76, 48, 51, 52, 53, 58, 55, 56, 57, 47, 71, 67, 60, 76, 61, 62, 63, 64, 65, 62, 67, 68, 78, 70, 71, 72, 73, 74, 75, 54 };
         public Palette(byte r, byte g, byte b)
         {
             red = r;
@@ -228,45 +228,30 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             get { return blue; }
             set { blue = value; }
         }
-
-
-
         public static Palette[] SetIMAGPalette (int[] indexSet,int colors, FileFormat frmt)
         {
             int a;
-            Palette[] p_pal = null;
-            Palette p=null;
-            //int[] p_index = new int[colors];
-            p_pal = new Palette[colors];
             int val;
-            
-
+            Palette[] p_pal;
+            Palette p;
+            p_pal = new Palette[colors];
             for (a = 0; a < colors; a++)
             {
                 val = indexSet[a];
-                if (frmt.Name == Constants.PC_VGA_FORMAT)
-                {
-                    p = new Palette(game_pal[val, 0], game_pal[val, 1], game_pal[val, 2]);
-                    //MessageBox.Show("Palette Color#"+ a +" " + game_pal[val, 0].ToString()+ game_pal[val, 1].ToString() + game_pal[val, 2].ToString());
-                }
-                else if (frmt.Name == Constants.IIGS_FORMAT)
-                {
+                if (frmt.Name == Constants.IIGS_FORMAT)
                     p = new Palette(IIGSPal[val, 0], IIGSPal[val, 1], IIGSPal[val, 2]);
-                }
                 else if (frmt.Name == Constants.PC_EGA_FORMAT)
-                {
                     p = new Palette(egaPal[val, 0], egaPal[val, 1], egaPal[val, 2]);
-                }
+                else
+                    p = new Palette(game_pal[val, 0], game_pal[val, 1], game_pal[val, 2]);
                 p_pal[a] = p;
             }
             return p_pal;
         }
-
-
         public static Palette[] SetPalette(int [] indexSet, int Index, int colors)
         {
             int a;           
-            Palette[] p_pal = null;
+            Palette[] p_pal;
             int[] p_index = new int[colors];
             switch (Index)
             {
@@ -299,7 +284,27 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
                 p_index[a] = pal[a];
             return p_index;
         }
+        public static int[] GetTilePalette(FileFormat ff)
+        {
+            int[] result;
+            switch(ff.Name)
+            {
+                case Constants.PC_VGA_FORMAT:
+                    result = vgatile;
+                    break;
+                case Constants.PC_EGA_FORMAT:
+                    result = Palette.vgaamap;
+                    break;
 
+                case Constants.AMIGA_FORMAT:
+                    result = amigascene;
+                    break;
+                default:
+                    result=vgaamap;
+                    break;
+            }
+            return result;
+        }
         public static int [] GetImagePalette (FileFormat ff,string res)
         {
             int[] result = null;
@@ -383,58 +388,6 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             if (result == null)
                 MessageBox.Show("Null Error for SetPalette");
             return result;
-        }
-        
-        public static GamePalettesIndex InitializePalette(string name)
-        {
-            string format = name;
-            GamePalettesIndex palIndex;
-            if (format == Constants.PC_VGA_FORMAT)
-            {
-                palIndex.atitle = Palette.vgatitle;
-                palIndex.ascene = Palette.vgaascene;
-                palIndex.bscene = Palette.vgabscene;               
-                palIndex.amap = Palette.vgaamap;
-                palIndex.tile = Palette.vgatile;
-                palIndex.defaultSprite = Palette.defaultsprite;
-            }
-            if (format == Constants.PC_EGA_FORMAT)
-            {
-                palIndex.atitle = Palette.vgaamap;              /* vgaamap is default value 0-15. */
-                palIndex.ascene = Palette.vgaamap;
-                palIndex.bscene = Palette.vgaamap;
-                palIndex.amap = Palette.vgaamap;
-                palIndex.tile = Palette.vgaamap;
-                palIndex.defaultSprite = Palette.vgaamap;
-            }
-            if(format == Constants.IIGS_FORMAT)
-            {
-                palIndex.ascene = Palette.vgaamap;
-                palIndex.atitle = Palette.gstitle;
-                palIndex.bscene = Palette.vgaamap;
-                palIndex.amap = Palette.vgaamap;
-                palIndex.tile = Palette.vgaamap;
-                palIndex.defaultSprite = Palette.gsdefaultsprite;
-            }
-            if (format == Constants.AMIGA_FORMAT)
-            {
-                palIndex.ascene = Palette.amigascene;
-                palIndex.atitle = Palette.amigatitle;
-                palIndex.bscene = Palette.amigascene;
-                palIndex.amap = Palette.vgaamap;
-                palIndex.tile = Palette.vgaamap;
-                palIndex.defaultSprite = Palette.amigadefeaultsprite;
-            }
-            else
-            {
-                palIndex.atitle = Palette.vgatitle;
-                palIndex.ascene = Palette.vgaascene;
-                palIndex.bscene = Palette.vgabscene;
-                palIndex.amap = Palette.vgaamap;
-                palIndex.tile = Palette.vgatile;
-                palIndex.defaultSprite = Palette.defaultsprite;
-            }
-            return palIndex;
-        }
+        }        
     }
 }

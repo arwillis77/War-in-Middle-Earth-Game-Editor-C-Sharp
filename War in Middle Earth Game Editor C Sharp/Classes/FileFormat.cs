@@ -14,36 +14,77 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
  /// </summary>
     public class FileFormat
     {
-        public string Name;
-        public int Endian;
-        public int DataEndian;
-        public string ExeFile;
-        public int Bitplanes;
-        public int FrmlBitplanes;
-        public Icon Icon;
+
+        private string m_name;
+        private int m_endian;
+        private int m_dataEndian;
+        private string m_exeFile;
+        private int m_bitPlanes;
+        private int m_frmlBitplanes;
+        private Icon m_icon;
+
+        /// <summary>
+        /// Name - Name of the File Format.  PC VGA, EGA, IIGS, Amiga, etc.
+        /// </summary>
+        public string Name
+        {
+            get { return m_name; }
+            set { m_name = value; }
+        }
+        public int Endian
+        {
+            get { return m_endian; }
+            set { m_endian = value; }
+        }
+
+        public int DataEndian
+        {
+            get { return m_dataEndian; }
+            set { m_dataEndian = value; }
+        }
+        public string ExeFile
+        {
+            get { return m_exeFile; }
+            set { m_exeFile = value; }
+        }
+        public int Bitplanes
+        {
+            get { return m_bitPlanes; }
+            set { m_bitPlanes = value;}
+        }
+        public int FrmlBitplanes
+        {
+            get { return m_frmlBitplanes; }
+            set { m_frmlBitplanes = value;}
+        }
+        public Icon Icon
+        {
+            get { return m_icon; }
+            set { m_icon = value; }
+        }
 
         public FileFormat()
         {
         }
         public FileFormat(int value)
         {
-            this.Name = Constants.GameFormat[value].Name;
-            this.Endian = Constants.GameFormat[value].Endian;
-            this.DataEndian = Constants.GameFormat[value].DataEndian;
-            this.ExeFile = Constants.GameFormat[value].ExeFile;
-            this.Bitplanes = Constants.GameFormat[value].Bitplanes;
-            this.FrmlBitplanes = Constants.GameFormat[value].FrmlBitplanes;
-            this.Icon = Constants.GameFormat[value].Icon;
+            m_name = Constants.GameFormat[value].Name;
+            m_endian = Constants.GameFormat[value].Endian;
+            m_dataEndian = Constants.GameFormat[value].DataEndian;
+            m_exeFile = Constants.GameFormat[value].ExeFile;
+            m_bitPlanes = Constants.GameFormat[value].Bitplanes;
+            m_frmlBitplanes = Constants.GameFormat[value].FrmlBitplanes;
+            m_icon = Constants.GameFormat[value].Icon;
         }
         public FileFormat(string name,int endian,int dataEndian, string exeFile,int bitPlanes,int frmlBitplanes, Icon ico)
         {
-            this.Name = name;
-            this.Endian = endian;
-            this.DataEndian = dataEndian;
-            this.ExeFile = exeFile;
-            this.Bitplanes = bitPlanes;
-            this.FrmlBitplanes = frmlBitplanes;
-            this.Icon = ico;
+            m_name = name;
+            m_endian = endian;
+            m_dataEndian = dataEndian;
+            m_exeFile = exeFile;
+            m_bitPlanes = bitPlanes;
+            m_frmlBitplanes = frmlBitplanes;
+            m_icon = ico;
         }
 
 
@@ -70,7 +111,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
     {
         public const string Program_Name = "WAR IN MIDDLE EARTH GAME EDITOR";
         public const string Program_Version = "1.00B Build 4 VS2022 C#";
-        public const string ProgramDate = "03/19/2022";
+        public const string ProgramDate = "11/11/2022";
         public const string PC_VGA_EXE = "START.EXE";
         public const string PC_EGA_EXE = "LORD.EXE";
         public const string IIGS_EXE = "EARTH.SYS16";

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using War_in_Middle_Earth_Game_Editor_C_Sharp.Classes;
 using Microsoft.VisualBasic;
+using System.Drawing.Imaging;
 
 namespace War_in_Middle_Earth_Game_Editor_C_Sharp
 {
@@ -22,7 +23,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
         private int[] m_palette;                                            /* Array for palette color index values */
         private string m_filenamedata;                                      /* Filename string to use in file i/o operations. */
         private int m_scale;                                                /* Scale value for the loaded image. */
-        private IMAG_Resource m_IMAGResource;
+        private IMAG_Resource m_IMAGResource;                               /* Class object for Image resources */
         private BinaryReader m_reader;                                      /* Binary Reader object for i/o operations for resource binary file */
         private bool formLoaded;                                            /* Flag for whether form is loaded. */
         private bool m_escape;                                              /* Flag to escape method */
@@ -38,19 +39,17 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
         {
             InitializeComponent();
             string p_tempFilename;
+            /* Set flags */
             formLoaded = false;
             firstLoad = true;
             m_escape = false;
             LoadedResource = rvd;
             m_fileFormat = Utils.GetCurrentFormat();
             if (rvd.FileName != ResourceFile.ARCHIVE_ID)
-            {
                 p_tempFilename=string.Concat(rvd.FileName, ".RES");
-                m_filenamedata = Utils.GetFullFilename(p_tempFilename);
-            } else {
+             else 
                 p_tempFilename = string.Concat(rvd.FileName, ".DAT");
-                m_filenamedata = Utils.GetFullFilename(p_tempFilename);
-            }
+            m_filenamedata = Utils.GetFullFilename(p_tempFilename);
             m_scale = scale;            
             m_palette = Palette.GetImagePalette(m_fileFormat, rvd.FileName);
             
@@ -62,10 +61,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
         private void FillScales()
         {
             foreach (int v in ScaleValues)
-            {
                 comboBoxImageScale.Items.Add(v);
-               
-            }
             comboBoxImageScale.Text = m_scale.ToString();
         }
         private void frmViewResource_Load(object sender, EventArgs e)
@@ -79,6 +75,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             textResourceType.Text = m_loadedresource.Name.Substring(0,4);
             textBoxOffset.Text = m_loadedresource.Offset.ToString();
             textBoxCompressedSize.Text = m_loadedresource.DataSize.ToString();
+            textBoxUncompressedSize.Text = m_IMAGResource.UncompressedDataSize.ToString();
             textBoxWidth.Text = m_IMAGResource.Width.ToString();
             textBoxHeight.Text = m_IMAGResource.Height.ToString();
             textBoxImagePlane.Text = m_IMAGResource.ImagePlane.ToString();
@@ -209,12 +206,22 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
                 }
             }
         }
-        private void RefreshImage()
+      
+
+        private void buttonSaveToBitmap_Click(object sender, EventArgs e)
         {
-            pnlMainDisplay.Size = new Size(m_IMAGResource.Width * m_scale, m_IMAGResource.Height * m_scale);
-            pnlMainDisplay.Invalidate();
-            pnlMainDisplay.Refresh();
+            Bitmap bm = new Bitmap(m_IMAGResource.Width * m_scale, m_IMAGResource.Height * m_scale);
+            pnlMainDisplay.DrawToBitmap(bm,new Rectangle(0,0,bm.Width,bm.Height));
+            bm.Save(m_loadedresource.Name+".bmp", ImageFormat.Bmp);
         }
 
+        private void comboBoxImageScale_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (formLoaded == false)
+                return;
+            pnlMainDisplay.Size = new Size(m_IMAGResource.Width, m_IMAGResource.Height);
+            m_scale = (int)comboBoxImageScale.SelectedIndex;
+            Utils.RefreshPanel(ref pnlMainDisplay, m_scale);
+        }
     }
 }

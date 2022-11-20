@@ -18,7 +18,6 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
     {
         private ResourceViewData m_loadedResource;                      // Private object for loaded resource data.
         private int m_characterIndex;                                   // Private int value storing index for character list.
-        private string m_filenamedata;                                  // Private string for archive filename -- Archive.DAT.
         private Archive m_currentArchive;                                      // Private archive object.
         private FileFormat m_fileFormat;                                // Private object for file format related data.
         private EditorState archivestate = new EditorState();
@@ -77,7 +76,6 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
         /// </summary>
         private void InitializeCharacterData()
         {
-            //SaveArchive = new Archive(CurrentFormat,CharacterIndex);
             txtCharacterName.Text = m_loadedResource.Name;
             textBoxCharacterValue.Text = SaveArchive.SelectedCharacter.NameCode.ToString();
             textBoxByte34.Text = SaveArchive.SelectedCharacter.Bytes3and4.ToString();
@@ -108,14 +106,9 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             textBoxByte32.Text = SaveArchive.SelectedCharacter.Byte33.ToString();
             textBoxByte33.Text = SaveArchive.SelectedCharacter.Byte33.ToString();
             textBoxByte37.Text = SaveArchive.SelectedCharacter.Byte37.ToString();
-
             InitializeSpriteColors();
             m_leaders = new Leaders(cnl);
             m_leaders.InitializeLeaderData(comboBoxFollow, SaveArchive.SelectedCharacter.LeaderFollow);
-            //InitializeLeaderData();
-            //comboBoxFollow.Text = m_leaders.GetLeaderName(SaveArchive.SelectedCharacter.LeaderFollow);
-            
-
             CloseCharacter();
 
         }

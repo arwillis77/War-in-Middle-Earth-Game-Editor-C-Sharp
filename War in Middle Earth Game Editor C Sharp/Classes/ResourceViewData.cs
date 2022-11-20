@@ -21,6 +21,18 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
         private uint m_dataSize;
         private string m_fileName;
         private int m_fileOffset;
+
+
+
+        public ResourceViewData(ListView lv)
+        {
+            m_name = lv.SelectedItems[0].SubItems[0].Text;
+            m_type = lv.SelectedItems[0].SubItems[3].Text;
+            m_number = Convert.ToInt32(lv.SelectedItems[0].SubItems[1].Text);
+            m_dataSize = Convert.ToUInt32(lv.SelectedItems[0].SubItems[2].Text);
+            m_fileName = lv.SelectedItems[0].SubItems[4].Text;
+            m_fileOffset = Convert.ToInt32(lv.SelectedItems[0].SubItems[5].Text);
+        }
         public ResourceViewData() { }
         /// <summary>
         /// Resource name.  Begins with the four letter resource ID and value.  (i.e. IMAG100 is a bitmap resource #100)

@@ -9,10 +9,9 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
 {
     internal class TabSet
     {
-        private TabControl m_explorerMainTab;
+
         private TabControl m_resourceTabs;
-        private TabPage m_resourceTabPage;
-        private List<TabPage> m_tabs;
+
 
 
         public TabControl ResourceTabs
@@ -25,9 +24,6 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
         public TabSet()
         { 
             m_resourceTabs = new TabControl();
-        
-        
-        
         }
 
 

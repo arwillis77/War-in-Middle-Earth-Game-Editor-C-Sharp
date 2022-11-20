@@ -43,8 +43,6 @@
             this.pictureboxSmallTile.Size = new System.Drawing.Size(48, 48);
             this.pictureboxSmallTile.TabIndex = 0;
             this.pictureboxSmallTile.TabStop = false;
-            this.pictureboxSmallTile.Click += new System.EventHandler(this.pictureboxSmallTile_Click);
-            this.pictureboxSmallTile.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureSmallTile_Paint);
             // 
             // pictureboxTileSet
             // 

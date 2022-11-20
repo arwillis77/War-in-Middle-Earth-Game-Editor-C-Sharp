@@ -18,13 +18,13 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
     public partial class frmExportTile : Form
     {
         private static int TileSize;                                    /* Tile Size - Gets from constant in Maptile class. */
-        private static TileMap m_tileset = new TileMap(80,816);
+        private static TileMap m_tileset = new TileMap(80,816);         /* Set TileSet Arrat */
         private MapTile m_maptile;                                      /* Maptile object */
-        private int m_tileIndex;                                        /* Index value for selected tile from TileList */
+        
         private int m_tileScale;                                        /* Scale value for displaying Tiles and Tilesets x1, x3 */
         private Palette [] m_tilePalette;                               /* Tile Palette array of Red, Green, Blue color values */
-        private ImageList m_imageTileList;
-        private TileMap m_tileMap;
+        private ImageList m_imageTileList;                              /* Image list to store graphic tile data */
+        private TileMap m_tileMap;                                      /* Array to store tile mape data */
         private struct TileMap
         {
             public int Width;
@@ -43,11 +43,13 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             this.m_maptile = mt;
             m_tileScale = scale;
             m_tileMap = new TileMap((m_tileset.Width * scale), (m_tileset.Height * scale));            
-            m_tileIndex = 0;
+            
             m_tilePalette = GetTilePalette(mt.TilePalette);
             TileSize = MapTile.TileSize;
-            m_imageTileList = new ImageList();  
-            m_imageTileList.ImageSize=new Size(TileSize * m_tileScale, TileSize * m_tileScale);
+            m_imageTileList = new ImageList
+            {
+                ImageSize = new Size(TileSize * m_tileScale, TileSize * m_tileScale)
+            };
         }
 
         private Palette[] GetTilePalette(int[] palette)
@@ -59,16 +61,14 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
         }
         public void CreateTileSet()
         {
+            int a;
             if (pictureboxSmallTile == null)
                 return;
-            int a;
             for (a = 0; a < 255; a++)
             {
-                m_tileIndex = a;
                 DrawTile(a);
                 pictureboxSmallTile.Refresh();
                 m_imageTileList.Images.Add(pictureboxSmallTile.Image);
-               
             }
         }
         private void DrawTile(int index)
@@ -111,7 +111,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             {
                 if (positionX >= (tilemapWidth - 1))
                 {
-                    positionY = positionY + (TileSize * m_tileScale); //+1
+                    positionY += (TileSize * m_tileScale); //+1
                     positionX = 0;
                 }
                 else if (positionX == 0 && positionY != 0)
@@ -120,14 +120,10 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
                   //  positionX++;
                 tile = (Bitmap)m_imageTileList.Images[x];
                 g2.DrawImage(tile, positionX, positionY,tileWidth,tileHeight);
-                positionX = positionX + (TileSize * m_tileScale);
+                positionX += (TileSize * m_tileScale);
                 pictureboxTileSet.Image = b2;
 
             }
-        }
-        private void pictureSmallTile_Paint(object sender, PaintEventArgs e)
-        {
-        
         }
 
         private void frmExportTile_Load(object sender, EventArgs e)
@@ -145,15 +141,6 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             pictureboxTileSet.DrawToBitmap(exportBitmap, ClientRectangle);
             exportBitmap.Save("TileSet.bmp", ImageFormat.Bmp);
             MessageBox.Show("TileSet Saved!");
-
-
-
-
-        }
-
-        private void pictureboxSmallTile_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

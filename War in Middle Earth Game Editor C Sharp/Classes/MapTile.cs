@@ -27,18 +27,28 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp.Classes
         private string tileFile;
         private BinaryReader tileReader;
         private List<byte[]> m_tileSet;
+        private Palette [] m_paletteRGB;
+
+
+        public Palette [] RGBTilePalette
+        {
+            get { return m_paletteRGB; }
+            set { m_paletteRGB = value; }
+        }
 
         /*  Constructor */
         public MapTile()
         {
             InitializeTileOffsetValues();
-            tilePalette = GetTilePalette();
+            tilePalette = FillPaletteArray();
             tileOffset = GetTileOffset();
             tileFile = GetTileFile();
             string fullname = Utils.GetFullFilename(tileFile);
             tileFile = fullname;
             tileReader = new BinaryReader(File.OpenRead(tileFile));
             m_tileSet = InitializeTileSet();
+            m_paletteRGB = GetTilePalette(tilePalette);
+
         }
         public List<byte[]> MapTileSet
         {
@@ -88,7 +98,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp.Classes
 
 
 
-        public int[] GetTilePalette()
+        public int[] FillPaletteArray()
         {
             int[] result;
             FileFormat ff = Utils.GetCurrentFormat();
@@ -109,6 +119,16 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp.Classes
             m_filename = this.tileOffsetSet[result].ResourceFile;
             return m_filename;
         }
+
+
+        private Palette[] GetTilePalette(int[] palette)
+        {
+            Palette[] pal;
+            int palSize = palette.Count();
+            pal = Palette.SetPalette(palette, 0, palSize);
+            return pal;
+        }
+
         public byte[] ReadChunkData(BinaryReader br, int start, int number)
         {
             byte[] result = new byte[Tile_Pixels];
@@ -121,7 +141,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp.Classes
             for (a = 0; a < (Tile_Pixels / 2); a++)
             {
                 bPix = br.ReadByte();
-                BinaryFile.Nibbler(bPix, ref value1, ref value2);
+                BinaryFileEndian.Nibbler(bPix, ref value1, ref value2);
                 result[arrayIt++] = value1;
                 result[arrayIt++] = value2;
             }

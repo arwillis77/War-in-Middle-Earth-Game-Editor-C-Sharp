@@ -14,10 +14,10 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
     public partial class SplashScreen : Form
     {
         static private string ApplicationTitle = "SYNERGISTIC WAR IN MIDDLE EARTH EDITOR";
-        static private string ApplicationVersion = "VERSION 2.01a";
-        static private string ApplicationBuild = "Build 4 VS2022 C# : 11/06/2022";
+        static private string ApplicationVersion = "VERSION 2.2a";
+        static private string ApplicationBuild = "Build 5 VS2022 C# : 04/05/2023";
         static private string ApplicationAuthors = "PROGRAMMED BY Aaron R. Willis & Pavel Řezníček";
-        static private string ApplicationCopyright = "Application Copyright (C) 2022 Aaron R. Willis";
+        static private string ApplicationCopyright = "Application Copyright (C) 2023 Aaron R. Willis";
         static private string WIMECopyright = "War in Middle Earth -- Copyright (C) 1988 Melbourne House";
         Form p_form;
         

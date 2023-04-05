@@ -31,7 +31,18 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp.Classes
             }
             return currentFormat;
         }
-        
+
+        public static void ExportMapTile(int scale)
+        {
+            MapTile m_mapTile = new MapTile();
+            if (m_mapTile == null)
+            {
+                MessageBox.Show("MapTile is null", "Null Error!");
+            }
+            Form m_frmMapExport = new frmExportTile(m_mapTile, scale);
+            m_frmMapExport.Dispose();
+
+        }
         public struct ProgramSpecifications
         {
             public string Directory;
@@ -108,7 +119,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp.Classes
             mod = clipWidth % 16;
             result = (clipWidth / 16) * 16;
             if (mod > 0)
-                result = result + 16;
+                result += 16;
             return result;
         }
 

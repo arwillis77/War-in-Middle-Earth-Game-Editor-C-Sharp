@@ -16,6 +16,9 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp.Classes
 
         //public CharacterNameList NameList;
         public GameStringList NameList;
+        private CharacterNameList characterNameList;
+        private CityNameList cityNameList;
+
 
 
         public frmStringDisplay()
@@ -24,7 +27,14 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp.Classes
         }
 
 
-        public frmStringDisplay(GameStringList olist)
+        public frmStringDisplay(CharacterNameList cnl)
+        {
+            InitializeComponent();
+            NameList = cnl;
+        }
+
+
+        public frmStringDisplay(ObjectNameList olist)
         {
             InitializeComponent();
             NameList = olist;

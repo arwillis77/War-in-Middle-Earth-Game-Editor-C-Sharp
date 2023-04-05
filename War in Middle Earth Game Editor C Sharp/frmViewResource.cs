@@ -24,7 +24,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
         private string m_filenamedata;                                      /* Filename string to use in file i/o operations. */
         private int m_scale;                                                /* Scale value for the loaded image. */
         private IMAG_Resource m_IMAGResource;                               /* Class object for Image resources */
-        private BinaryReader m_reader;                                      /* Binary Reader object for i/o operations for resource binary file */
+        private BinaryFileEndian m_reader;                                  /* Binary Reader object for i/o operations for resource binary file */
         private bool formLoaded;                                            /* Flag for whether form is loaded. */
         private bool m_escape;                                              /* Flag to escape method */
         private bool firstLoad;                                             /* Flag for whether this is the first load for the form. */
@@ -90,7 +90,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             int palColors = m_palette.Count();
             int p_endOffset = m_loadedresource.Offset;
             string p_resource = ResourceFile.chunkTypes[4];      
-            m_reader = new BinaryReader(File.Open(m_filenamedata, FileMode.Open));
+            m_reader = new BinaryFileEndian(File.Open(m_filenamedata, FileMode.Open));
             m_IMAGResource = new IMAG_Resource(m_reader, LoadedResource.Offset, m_palette);
             if(m_IMAGResource == null)
             {

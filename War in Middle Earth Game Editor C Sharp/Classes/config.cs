@@ -43,6 +43,9 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             set { m_gameExecutable = value; }
         }
 
+
+        public Config()
+        { }
         public Config(string directory, string filename, int scale)
         {
             //this.m_configPresent= ConfigExist(CONFIG_FILE);
@@ -91,7 +94,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
         private int GetScaleValue()
 
         {
-            int result = 0;
+            int result;
             string val="";
             string filler;
             using (XmlReader confile = XmlReader.Create(CONFIG_FILE))

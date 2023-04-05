@@ -118,6 +118,7 @@
             this.numberArmyQuantity = new System.Windows.Forms.NumericUpDown();
             this.labelQty = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.checkBoxVisible = new System.Windows.Forms.CheckBox();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureMapIcon)).BeginInit();
             this.grpAddArmy.SuspendLayout();
@@ -274,7 +275,7 @@
             this.textDestinationY.BackColor = System.Drawing.Color.Gray;
             this.textDestinationY.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textDestinationY.ForeColor = System.Drawing.Color.White;
-            this.textDestinationY.Location = new System.Drawing.Point(480, 48);
+            this.textDestinationY.Location = new System.Drawing.Point(480, 47);
             this.textDestinationY.Name = "textDestinationY";
             this.textDestinationY.ReadOnly = true;
             this.textDestinationY.Size = new System.Drawing.Size(34, 23);
@@ -285,7 +286,7 @@
             this.textDestinationX.BackColor = System.Drawing.Color.Gray;
             this.textDestinationX.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textDestinationX.ForeColor = System.Drawing.Color.White;
-            this.textDestinationX.Location = new System.Drawing.Point(384, 48);
+            this.textDestinationX.Location = new System.Drawing.Point(384, 47);
             this.textDestinationX.Name = "textDestinationX";
             this.textDestinationX.ReadOnly = true;
             this.textDestinationX.Size = new System.Drawing.Size(34, 23);
@@ -306,7 +307,7 @@
             // 
             this.labelDestinationX.AutoSize = true;
             this.labelDestinationX.ForeColor = System.Drawing.Color.White;
-            this.labelDestinationX.Location = new System.Drawing.Point(356, 52);
+            this.labelDestinationX.Location = new System.Drawing.Point(356, 51);
             this.labelDestinationX.Name = "labelDestinationX";
             this.labelDestinationX.Size = new System.Drawing.Size(22, 15);
             this.labelDestinationX.TabIndex = 10;
@@ -318,7 +319,7 @@
             this.txtLocationY.BackColor = System.Drawing.Color.Gray;
             this.txtLocationY.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtLocationY.ForeColor = System.Drawing.Color.White;
-            this.txtLocationY.Location = new System.Drawing.Point(480, 16);
+            this.txtLocationY.Location = new System.Drawing.Point(480, 17);
             this.txtLocationY.Name = "txtLocationY";
             this.txtLocationY.ReadOnly = true;
             this.txtLocationY.Size = new System.Drawing.Size(34, 23);
@@ -329,7 +330,7 @@
             this.txtLocationX.BackColor = System.Drawing.Color.Gray;
             this.txtLocationX.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtLocationX.ForeColor = System.Drawing.Color.White;
-            this.txtLocationX.Location = new System.Drawing.Point(384, 16);
+            this.txtLocationX.Location = new System.Drawing.Point(384, 17);
             this.txtLocationX.Name = "txtLocationX";
             this.txtLocationX.ReadOnly = true;
             this.txtLocationX.Size = new System.Drawing.Size(34, 23);
@@ -339,7 +340,7 @@
             // 
             this.labelLocationY.AutoSize = true;
             this.labelLocationY.ForeColor = System.Drawing.Color.White;
-            this.labelLocationY.Location = new System.Drawing.Point(443, 19);
+            this.labelLocationY.Location = new System.Drawing.Point(443, 21);
             this.labelLocationY.Name = "labelLocationY";
             this.labelLocationY.Size = new System.Drawing.Size(22, 15);
             this.labelLocationY.TabIndex = 7;
@@ -350,7 +351,7 @@
             // 
             this.labelLocationX.AutoSize = true;
             this.labelLocationX.ForeColor = System.Drawing.Color.White;
-            this.labelLocationX.Location = new System.Drawing.Point(356, 20);
+            this.labelLocationX.Location = new System.Drawing.Point(356, 21);
             this.labelLocationX.Name = "labelLocationX";
             this.labelLocationX.Size = new System.Drawing.Size(22, 15);
             this.labelLocationX.TabIndex = 6;
@@ -363,7 +364,7 @@
             this.dropMobilized.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.dropMobilized.ForeColor = System.Drawing.Color.White;
             this.dropMobilized.FormattingEnabled = true;
-            this.dropMobilized.Location = new System.Drawing.Point(98, 78);
+            this.dropMobilized.Location = new System.Drawing.Point(98, 77);
             this.dropMobilized.Name = "dropMobilized";
             this.dropMobilized.Size = new System.Drawing.Size(228, 23);
             this.dropMobilized.TabIndex = 5;
@@ -374,7 +375,7 @@
             this.cboDestination.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cboDestination.ForeColor = System.Drawing.Color.White;
             this.cboDestination.FormattingEnabled = true;
-            this.cboDestination.Location = new System.Drawing.Point(98, 48);
+            this.cboDestination.Location = new System.Drawing.Point(98, 47);
             this.cboDestination.Name = "cboDestination";
             this.cboDestination.Size = new System.Drawing.Size(150, 23);
             this.cboDestination.TabIndex = 4;
@@ -416,7 +417,7 @@
             // 
             this.labelLocation.AutoSize = true;
             this.labelLocation.ForeColor = System.Drawing.Color.White;
-            this.labelLocation.Location = new System.Drawing.Point(33, 20);
+            this.labelLocation.Location = new System.Drawing.Point(33, 21);
             this.labelLocation.Name = "labelLocation";
             this.labelLocation.Size = new System.Drawing.Size(53, 15);
             this.labelLocation.TabIndex = 0;
@@ -446,7 +447,7 @@
             this.textBoxCharacterValue.BackColor = System.Drawing.Color.Gray;
             this.textBoxCharacterValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBoxCharacterValue.ForeColor = System.Drawing.Color.White;
-            this.textBoxCharacterValue.Location = new System.Drawing.Point(198, 33);
+            this.textBoxCharacterValue.Location = new System.Drawing.Point(198, 31);
             this.textBoxCharacterValue.Name = "textBoxCharacterValue";
             this.textBoxCharacterValue.ReadOnly = true;
             this.textBoxCharacterValue.Size = new System.Drawing.Size(50, 23);
@@ -466,7 +467,7 @@
             this.textFollowValue.BackColor = System.Drawing.Color.Gray;
             this.textFollowValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textFollowValue.ForeColor = System.Drawing.Color.White;
-            this.textFollowValue.Location = new System.Drawing.Point(489, 32);
+            this.textFollowValue.Location = new System.Drawing.Point(489, 31);
             this.textFollowValue.Name = "textFollowValue";
             this.textFollowValue.ReadOnly = true;
             this.textFollowValue.Size = new System.Drawing.Size(50, 23);
@@ -496,7 +497,7 @@
             this.comboBoxFollow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.comboBoxFollow.ForeColor = System.Drawing.Color.White;
             this.comboBoxFollow.FormattingEnabled = true;
-            this.comboBoxFollow.Location = new System.Drawing.Point(341, 32);
+            this.comboBoxFollow.Location = new System.Drawing.Point(341, 31);
             this.comboBoxFollow.Name = "comboBoxFollow";
             this.comboBoxFollow.Size = new System.Drawing.Size(130, 23);
             this.comboBoxFollow.TabIndex = 18;
@@ -516,7 +517,7 @@
             this.txtCharacterName.BackColor = System.Drawing.Color.Gray;
             this.txtCharacterName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtCharacterName.ForeColor = System.Drawing.Color.White;
-            this.txtCharacterName.Location = new System.Drawing.Point(67, 33);
+            this.txtCharacterName.Location = new System.Drawing.Point(67, 31);
             this.txtCharacterName.Name = "txtCharacterName";
             this.txtCharacterName.ReadOnly = true;
             this.txtCharacterName.Size = new System.Drawing.Size(117, 23);
@@ -929,6 +930,7 @@
             // 
             // groupBoxAttributes
             // 
+            this.groupBoxAttributes.Controls.Add(this.checkBoxVisible);
             this.groupBoxAttributes.Controls.Add(this.numberStealth);
             this.groupBoxAttributes.Controls.Add(this.lblStealth);
             this.groupBoxAttributes.Controls.Add(this.numberPower);
@@ -958,7 +960,7 @@
             this.numberStealth.BackColor = System.Drawing.Color.Gray;
             this.numberStealth.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.numberStealth.ForeColor = System.Drawing.Color.White;
-            this.numberStealth.Location = new System.Drawing.Point(399, 61);
+            this.numberStealth.Location = new System.Drawing.Point(399, 59);
             this.numberStealth.Maximum = new decimal(new int[] {
             255,
             0,
@@ -983,7 +985,7 @@
             this.numberPower.BackColor = System.Drawing.Color.Gray;
             this.numberPower.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.numberPower.ForeColor = System.Drawing.Color.White;
-            this.numberPower.Location = new System.Drawing.Point(399, 22);
+            this.numberPower.Location = new System.Drawing.Point(399, 20);
             this.numberPower.Maximum = new decimal(new int[] {
             255,
             0,
@@ -1018,7 +1020,7 @@
             this.numberMoraleTotal.BackColor = System.Drawing.Color.Gray;
             this.numberMoraleTotal.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.numberMoraleTotal.ForeColor = System.Drawing.Color.White;
-            this.numberMoraleTotal.Location = new System.Drawing.Point(193, 63);
+            this.numberMoraleTotal.Location = new System.Drawing.Point(193, 59);
             this.numberMoraleTotal.Maximum = new decimal(new int[] {
             255,
             0,
@@ -1034,7 +1036,7 @@
             this.numberMoraleQty.BackColor = System.Drawing.Color.Gray;
             this.numberMoraleQty.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.numberMoraleQty.ForeColor = System.Drawing.Color.White;
-            this.numberMoraleQty.Location = new System.Drawing.Point(98, 61);
+            this.numberMoraleQty.Location = new System.Drawing.Point(98, 59);
             this.numberMoraleQty.Maximum = new decimal(new int[] {
             255,
             0,
@@ -1049,7 +1051,7 @@
             // 
             this.labelMorale.AutoSize = true;
             this.labelMorale.ForeColor = System.Drawing.Color.White;
-            this.labelMorale.Location = new System.Drawing.Point(42, 63);
+            this.labelMorale.Location = new System.Drawing.Point(40, 63);
             this.labelMorale.Name = "labelMorale";
             this.labelMorale.Size = new System.Drawing.Size(44, 15);
             this.labelMorale.TabIndex = 26;
@@ -1060,7 +1062,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.ForeColor = System.Drawing.Color.White;
-            this.label4.Location = new System.Drawing.Point(166, 101);
+            this.label4.Location = new System.Drawing.Point(166, 103);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(18, 15);
             this.label4.TabIndex = 25;
@@ -1102,7 +1104,7 @@
             // 
             this.labelHP.AutoSize = true;
             this.labelHP.ForeColor = System.Drawing.Color.White;
-            this.labelHP.Location = new System.Drawing.Point(63, 101);
+            this.labelHP.Location = new System.Drawing.Point(61, 103);
             this.labelHP.Name = "labelHP";
             this.labelHP.Size = new System.Drawing.Size(23, 15);
             this.labelHP.TabIndex = 22;
@@ -1124,7 +1126,7 @@
             this.numberArmyTotal.BackColor = System.Drawing.Color.Gray;
             this.numberArmyTotal.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.numberArmyTotal.ForeColor = System.Drawing.Color.White;
-            this.numberArmyTotal.Location = new System.Drawing.Point(193, 22);
+            this.numberArmyTotal.Location = new System.Drawing.Point(193, 20);
             this.numberArmyTotal.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -1141,7 +1143,7 @@
             this.numberArmyQuantity.BackColor = System.Drawing.Color.Gray;
             this.numberArmyQuantity.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.numberArmyQuantity.ForeColor = System.Drawing.Color.White;
-            this.numberArmyQuantity.Location = new System.Drawing.Point(98, 22);
+            this.numberArmyQuantity.Location = new System.Drawing.Point(98, 20);
             this.numberArmyQuantity.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -1178,6 +1180,17 @@
             this.groupBox4.TabIndex = 13;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Sprite";
+            // 
+            // checkBoxVisible
+            // 
+            this.checkBoxVisible.AutoSize = true;
+            this.checkBoxVisible.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkBoxVisible.Location = new System.Drawing.Point(348, 101);
+            this.checkBoxVisible.Name = "checkBoxVisible";
+            this.checkBoxVisible.Size = new System.Drawing.Size(60, 19);
+            this.checkBoxVisible.TabIndex = 34;
+            this.checkBoxVisible.Text = "Visible";
+            this.checkBoxVisible.UseVisualStyleBackColor = true;
             // 
             // frmArchiveView
             // 
@@ -1325,5 +1338,6 @@
         private System.Windows.Forms.NumericUpDown numberArmyQuantity;
         private System.Windows.Forms.Label labelQty;
         private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.CheckBox checkBoxVisible;
     }
 }

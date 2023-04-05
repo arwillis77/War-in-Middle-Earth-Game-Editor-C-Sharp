@@ -16,8 +16,8 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
     {
 
         private string m_name;
-        private int m_endian;
-        private int m_dataEndian;
+        private Endianness m_endian;
+        private Endianness m_dataEndian;
         private string m_exeFile;
         private int m_bitPlanes;
         private int m_frmlBitplanes;
@@ -31,13 +31,13 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             get { return m_name; }
             set { m_name = value; }
         }
-        public int Endian
+        public Endianness Endian
         {
             get { return m_endian; }
             set { m_endian = value; }
         }
 
-        public int DataEndian
+        public Endianness DataEndian
         {
             get { return m_dataEndian; }
             set { m_dataEndian = value; }
@@ -76,7 +76,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             m_frmlBitplanes = Constants.GameFormat[value].FrmlBitplanes;
             m_icon = Constants.GameFormat[value].Icon;
         }
-        public FileFormat(string name,int endian,int dataEndian, string exeFile,int bitPlanes,int frmlBitplanes, Icon ico)
+        public FileFormat(string name,Endianness endian,Endianness dataEndian, string exeFile,int bitPlanes,int frmlBitplanes, Icon ico)
         {
             m_name = name;
             m_endian = endian;
@@ -104,14 +104,21 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             return formatval;
         }
     }
+
+
+
+    public enum Endianness
+    {
+        endLittle,endBig
+    }
     /// <summary>
     /// Contains Constants used in the program.
     /// </summary>
     public static class Constants
     {
         public const string Program_Name = "WAR IN MIDDLE EARTH GAME EDITOR";
-        public const string Program_Version = "1.00B Build 4 VS2022 C#";
-        public const string ProgramDate = "11/11/2022";
+        public const string Program_Version = "1.00B Build 5 VS2022 C#";
+        public const string ProgramDate = "01/02/2023";
         public const string PC_VGA_EXE = "START.EXE";
         public const string PC_EGA_EXE = "LORD.EXE";
         public const string IIGS_EXE = "EARTH.SYS16";
@@ -122,8 +129,13 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
         public const string IIGS_FORMAT = "IIGS";
         public const string AMIGA_FORMAT = "AMIGA";
         public const string ST_FORMAT = "ST";
-        public enum ENDIAN {LITTLE, BIG }
-        public const int TILE_MAX = 255;
+        public const string filterPCVGA = "PC-VGA EXECUTABLE|START.EXE*.*|PC-EGA EXECUTABLE|LORD.EXE*.*";
+        public const string filterIIGS = "IIGS ProDOS 16(EARTH.SYS16)|earth.sys16*.*";
+        public const string filterAmiga = "Amiga (warinmiddleearth|warinmiddleearth*.*";
+        public const string filterST = "Atari ST (COMMAND.PRG|command.prg*.*";
+
+        public enum ENDIAN { LITTLE, BIG }
+        public const int TILE_MAX = 256;
         public const int CHAR_MAX = 193;
         public const int INT_MAX = 65535;
         public const int CITY_TOTAL = 84;
@@ -134,18 +146,37 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
         public static Icon ATARI_ICON = Properties.Resources.atariicon;
         public static List<FileFormat> GameFormat = new List<FileFormat>
         {
-            new FileFormat(PC_VGA_FORMAT, 0, 1, PC_VGA_EXE, 5, 5, PC_ICON ),
-            new FileFormat(PC_EGA_FORMAT, 0, 0, PC_EGA_EXE, 0, 0,PC_ICON ),
-            new FileFormat(IIGS_FORMAT, 0, 0, IIGS_EXE, 0, 0,IIGS_ICON ),
-            new FileFormat(AMIGA_FORMAT, 1, 1, AMIGA_EXE, 5, 5,AMIGA_ICON ),
-            new FileFormat(ST_FORMAT, 1, 1, ST_EXE, 4, 4,ATARI_ICON )
+            new FileFormat(PC_VGA_FORMAT, Endianness.endLittle,Endianness.endBig, PC_VGA_EXE, 5, 5, PC_ICON ),
+            new FileFormat(PC_EGA_FORMAT, Endianness.endLittle, Endianness.endLittle, PC_EGA_EXE, 0, 0,PC_ICON ),
+            new FileFormat(IIGS_FORMAT, Endianness.endLittle, Endianness.endLittle, IIGS_EXE, 0, 0,IIGS_ICON ),
+            new FileFormat(AMIGA_FORMAT, Endianness.endBig, Endianness.endBig, AMIGA_EXE, 5, 5,AMIGA_ICON ),
+            new FileFormat(ST_FORMAT, Endianness.endBig, Endianness.endBig, ST_EXE, 4, 4,ATARI_ICON )
         };
+
+        public static readonly Dictionary<string, Offsets> CityOffsets = new Dictionary<string, Offsets>
+        {
+            {PC_VGA_FORMAT, new Offsets(114179, 93300, 9)},
+            {Constants.PC_EGA_FORMAT, new Offsets(132731, 93300, 9)},
+            {Constants.IIGS_FORMAT, new Offsets(106464, 95598, 9) },
+            {Constants.AMIGA_FORMAT, new Offsets(39539, 40, 10)},
+            {Constants.ST_FORMAT, new Offsets(38721, 4, 10)}
+        };
+        public static readonly Dictionary<string, Offsets> CharacterOffsets = new Dictionary<string, Offsets>
+        {
+            {Constants.PC_VGA_FORMAT, new Offsets(104654, 93300, 37) },
+            {Constants.PC_EGA_FORMAT, new Offsets(123041, 112832, 37)},
+            {Constants.IIGS_FORMAT, new Offsets(106464, 62036, 37)},
+            {Constants.AMIGA_FORMAT, new Offsets(37874, 19024, 38)},
+            {Constants.ST_FORMAT, new Offsets(37096, -5858, 38)},
+        };
+
+
         public static FileFormat GetFormatData(string filename)
         {
             FileFormat tempFormat = new FileFormat();
             for (int x = 0; x < GameFormat.Count;x++)
             {
-                if  (GameFormat[x].ExeFile==filename)
+                if  (GameFormat[x].ExeFile==filename.ToUpper())
                 {
                     tempFormat = GameFormat[x];
                     break;

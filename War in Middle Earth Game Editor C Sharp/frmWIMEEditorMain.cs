@@ -16,35 +16,37 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
 {
     public partial class frmWIMEEditorMain : Form
     {
-        /* Global Form Variables */
-        private int[] scaleValues = { 1, 2, 3 };
-        public string[] GameFiles;
-        private MapTile m_mapTile;
-        private int m_scale;
-        public int imageScale
-        {
-            get { return m_scale; }
-            set { m_scale = value; }
-        }
-        TabControl explorerMain;
-        TabControl resourceTabs;
-        List<TabPage> GameTabs;
-        FileFormat currentFormat;        
-        CharacterNameList characternamelist;
-        CityNameList citynamelist;
-        ImageList ResourceImages;
-        private Image [] m_tabImages;
-        ResourceList LoadedResourceList;
-        ResourceList LoadedArchiveList;
-        Config cfg;
-        bool GameLoaded = false;
+        /* Form variables */
+        private int[] scaleValues = { 1, 2, 3 };                /* Scale values for image sizing */
+        private MapTile m_mapTile;                              /* Initialize MapTiles for export map tile */
+        private int m_scale;                                    /* Image scale variable */
+        bool GameLoaded = false;                                /* Flag for whether game loaded */
+        /* Form objects */
+        FileFormat currentFormat;                               /* Store data based on file format of game */
+        Config cfg;                                             /* Store config data */
+        /* Form Collections/Lists */
+        CharacterNameList characternamelist;                    /* Initialize character names */
+        CityNameList citynamelist;                              /* Initialize city names */
+        ImageList ResourceImages;                               /* Images for resource types in tabs */
+        private Image [] m_tabImages;                           
+        ResourceList LoadedResourceList;                        /* List of resource types */
+        ResourceList LoadedArchiveList;                         /* List of character data */
+        /* Form Objects */
+        frmResourceList m_frmResourceList;                      /* Form to display resource list data */
+        Form m_frmCityData;                                     /* Form to display city data */
+        /* Tab Objects */
+        TabPage m_tabpageResourceExplorer;                      /* Main TabPage - Resource Explorer */
+        TabPage m_tabpageGameTab;
+        TabControl explorerMain;                                /* Main TabControl - Resource Explorer */
+        TabControl resourceTabs;                                /* Secondary TabControl - Individual Resources */
+        List<TabPage> GameTabs;                                 /* TabPage Collection for GameTabs */
+        public frmMapView p_mapview;
+
+
         public frmWIMEEditorMain()
         {
             InitializeComponent();
             toolStrip1.Renderer = new ToolStripOverride();
-           
-        
-            //resourceTabs = new TabControl();
             m_tabImages = new Image[] {
                 War_in_Middle_Earth_Game_Editor_C_Sharp.Properties.Resources.menutileicon,
                 War_in_Middle_Earth_Game_Editor_C_Sharp.Properties.Resources.texticon32,
@@ -55,37 +57,12 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
                 War_in_Middle_Earth_Game_Editor_C_Sharp.Properties.Resources.menuarchiveicon
             };
         }
-        public void OpenWIMEGame()
-        {
-            string p_fileName;
-            string p_fileDir;
-            OpenFileDialog WIMEFileOpen = new OpenFileDialog
-            {
-                FilterIndex = 0,
-                Title = "Select the Executable for the WIME Game you wish to edit.",
-                Filter = "WIME Executables (start.exe, lord.exe, earth.sys16 * .*, warinmiddleearth * .*, Command.PRG)|start.exe; lord.exe; earth.sys16*.*; warinmiddleearth*.*; COMMAND.PRG|All Files (*.*)|*.*)", //'WIME PC Executable|start.exe;lord.exe|Apple IIGS Prodos16|earth.sys16*.*|Amiga Executable|warinmiddleearth*.*|ATARI ST Program|COMMAND.PRG|All Files|*.*",
-                FileName = ""
-            };
-            DialogResult dr = WIMEFileOpen.ShowDialog();
-            p_fileName = WIMEFileOpen.SafeFileName;
-            p_fileDir = Path.GetDirectoryName(WIMEFileOpen.FileName);
-            m_scale = 1;
-            cfg = new Config(p_fileDir, p_fileName, m_scale);
-            cfg.WriteConfig(cfg.GameDirectory, cfg.GameExecutable, cfg.Scale);
-            currentFormat = new FileFormat();
-            currentFormat = Constants.GetFormatData(cfg.GameExecutable);
-            GameLoaded = true;
-            characternamelist = CharacterNameList.InitializeCharacterNames(currentFormat);
-            citynamelist = CityNameList.InitializeCityNames(currentFormat);
-            LoadGame();
-        }
-
         private void frmWIMEEditorMain_Load(object sender, EventArgs e)
         {
-           
+          
             string title = string.Concat(Constants.Program_Name, " ", Constants.Program_Version, " ", Constants.ProgramDate);
             this.Text = title;
-           
+
             //cfg = new Config();
             //if (cfg.ConfigPresent)
             //{
@@ -99,20 +76,45 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             //    "Configuration File Not Found!", MessageBoxButtons.OK, MessageBoxIcon.Information);
             //}
         }
+        public void OpenWIMEGame()
+        {
+            string p_fileName;
+            string p_fileDir;
+            OpenFileDialog WIMEFileOpen = new OpenFileDialog 
+            {
+                FilterIndex = 0,
+                Title = "Select the Executable for the WIME Game you wish to edit.",
+                Filter = Constants.filterPCVGA+"|"+Constants.filterIIGS+"|"+Constants.filterAmiga+"|"+Constants.filterST,
+                FileName = ""
+            };
+            DialogResult dr = WIMEFileOpen.ShowDialog();
+            p_fileName = WIMEFileOpen.SafeFileName;
+            p_fileDir = Path.GetDirectoryName(WIMEFileOpen.FileName);
+            m_scale = scaleValues[1];
+            cfg = new Config(p_fileDir, p_fileName, m_scale);
+            cfg.WriteConfig(cfg.GameDirectory, cfg.GameExecutable, cfg.Scale);
+            currentFormat = Constants.GetFormatData(cfg.GameExecutable);
+            characternamelist = new CharacterNameList();
+            //frmStringDisplay fst = new frmStringDisplay(characternamelist);
+            //fst.Show();
+            citynamelist = new CityNameList();
+          
+            
+            GameLoaded = true;
+            LoadGame();
+        }
+
+
         public void LoadGame()
         {
-            frmResourceList p_form;
-            LoadedResourceList = ResourceList.InitializeResourceList(currentFormat);                /* Intializes list of all resources for the file format */
-            LoadedArchiveList = ResourceList.InitializeArchive(currentFormat, characternamelist);   /* Initializes list of archive characters */
-            
+            LoadedResourceList = new ResourceList(currentFormat);                               /* Intializes list of all resources for the file format */
+            LoadedArchiveList = new ResourceList(currentFormat, characternamelist);             /* Initializes list of archive characters */
             ResourceImages = new ImageList   
             {
                 ImageSize = new Size(16, 16),
             };
-            TabSet tabset = new TabSet();
-            TabPage ResourceExplorer = new TabPage();                                               /* TabPag for ResourceExplorer Main TabPage.  Placed into the ExplorerMain TabControl */
-                                                                                                    /* Collection of all the Game Resource Tabs */
-            TabPage GameTab;                                                                        /* Individual GameTab */
+            m_tabpageResourceExplorer = new TabPage();                                          /* TabPag for ResourceExplorer Main TabPage.  Placed into the ExplorerMain TabControl */
+
             // **** TO DO -- GetFileList function */
             explorerMain = new TabControl
             {
@@ -126,29 +128,26 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             GameTabs = new List<TabPage>();
             for (int x = 0; x < ResourceFile.chunkID.Length; x++)
             {
-                GameTab = new TabPage()
+                m_tabpageGameTab = new TabPage()
                 {
                     Text = ResourceFile.chunkID[x],
                     ImageIndex = x,
                 };
                 if (ResourceFile.chunkID[x] == ResourceFile.ARCHIVE_ID)
-                {            
-                    p_form = new frmResourceList(ResourceFile.chunkTypes[x], LoadedArchiveList);                    
-                }
+                    m_frmResourceList = new frmResourceList(ResourceFile.chunkTypes[x], LoadedArchiveList);  
                 else
-                {
-                    p_form = new frmResourceList(ResourceFile.chunkTypes[x], LoadedResourceList);
-                }
-                GameTab.Controls.Add(p_form);
-                p_form.Show();
-                GameTabs.Add(GameTab);
+                    m_frmResourceList = new frmResourceList(ResourceFile.chunkTypes[x], LoadedResourceList);
+                m_tabpageGameTab.Controls.Add(m_frmResourceList);
+                m_frmResourceList.Show();
+                GameTabs.Add(m_tabpageGameTab);
             }
-            ResourceExplorer.Text = "Resource Explorer";
-            ResourceExplorer.ImageIndex = 7;
+            m_tabpageResourceExplorer.Text = "Resource Explorer";
+            m_tabpageResourceExplorer.ImageIndex = 7;
             PanelEditor.Controls.Add(explorerMain);
-            explorerMain.TabPages.Add(ResourceExplorer);
-            ResourceExplorer.Controls.Add(resourceTabs);
+            explorerMain.TabPages.Add(m_tabpageResourceExplorer);
+            m_tabpageResourceExplorer.Controls.Add(resourceTabs);
             resourceTabs.Dock = DockStyle.Fill;
+            
             for (int y = 0; y < GameTabs.Count; y++)
             {
                 resourceTabs.TabPages.Add(GameTabs[y]);
@@ -157,8 +156,8 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
         }
         private void LoadCityList()
         {
-            Form p_form = new frmCityData();
-            p_form.Show();
+            m_frmCityData = new frmCityData();
+            m_frmCityData.Show();
         }
         private void ExportMapTiles()
         {
@@ -167,8 +166,8 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             {
                 MessageBox.Show("MapTile is null", "Null Error!");
             }
-            Form p_form = new frmExportTile(m_mapTile, imageScale);
-            p_form.Show();
+            Form m_frmMapExport = new frmExportTile(m_mapTile, m_scale);
+            m_frmMapExport.Show();
         }
         /* Event Handlers */
         private void OpenButton_Click(object sender, EventArgs e)
@@ -197,6 +196,27 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             }
         }
 
+        private void CloseGame()
+
+        {  
+            GameTabs.Clear();
+            GameLoaded = false;
+            LoadedResourceList = null;
+            LoadedArchiveList = null;
+            //GameFiles = null;
+            m_mapTile = null;
+            m_frmCityData.Close();
+            currentFormat = null;
+            m_tabpageGameTab.Hide();
+            m_tabpageGameTab = null;
+            m_tabpageResourceExplorer.Hide();
+            m_tabpageResourceExplorer = null;
+            m_frmResourceList.Hide();
+            m_frmResourceList = null;
+            explorerMain.Hide();
+            explorerMain = null;
+        }
+
 
         private void toolCityList_Click(object sender, EventArgs e)
         {
@@ -208,9 +228,6 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
                 return;
             }  
         }
-
-
- 
         /// <summary>
         /// clickExportTiles - When clicked in either menubar or toolbar.
         /// </summary>
@@ -246,12 +263,6 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
         {
             clickOpenWIMEGame();
         }
-
-        private void PanelEditor_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
         private void menuItemShowMenuBar_Click(object sender, EventArgs e)
         {
             if(menuItemShowMenuBar.Checked == true)
@@ -261,6 +272,9 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             }
         }
 
-
+        private void filemenuCloseGame_Click(object sender, EventArgs e)
+        {
+            CloseGame();
+        }
     }
 }

@@ -45,7 +45,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemOpenWIME = new System.Windows.Forms.ToolStripMenuItem();
             this.saveChangesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.filemenuCloseGame = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.programOptionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -71,7 +71,6 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             this.PanelEditor.Name = "PanelEditor";
             this.PanelEditor.Size = new System.Drawing.Size(1008, 678);
             this.PanelEditor.TabIndex = 1;
-            this.PanelEditor.Paint += new System.Windows.Forms.PaintEventHandler(this.PanelEditor_Paint);
             // 
             // toolStrip1
             // 
@@ -197,7 +196,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItemOpenWIME,
             this.saveChangesToolStripMenuItem,
-            this.closeToolStripMenuItem,
+            this.filemenuCloseGame,
             this.toolStripSeparator3,
             this.programOptionsToolStripMenuItem,
             this.exitToolStripMenuItem});
@@ -221,11 +220,12 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             this.saveChangesToolStripMenuItem.Size = new System.Drawing.Size(248, 26);
             this.saveChangesToolStripMenuItem.Text = "&Save Changes";
             // 
-            // closeToolStripMenuItem
+            // filemenuCloseGame
             // 
-            this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
-            this.closeToolStripMenuItem.Size = new System.Drawing.Size(248, 26);
-            this.closeToolStripMenuItem.Text = "&Close";
+            this.filemenuCloseGame.Name = "filemenuCloseGame";
+            this.filemenuCloseGame.Size = new System.Drawing.Size(248, 26);
+            this.filemenuCloseGame.Text = "&Close";
+            this.filemenuCloseGame.Click += new System.EventHandler(this.filemenuCloseGame_Click);
             // 
             // toolStripSeparator3
             // 
@@ -261,7 +261,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             this.toolStripMenuItem1.Checked = true;
             this.toolStripMenuItem1.CheckState = System.Windows.Forms.CheckState.Checked;
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(125, 22);
             this.toolStripMenuItem1.Text = "Toolbar";
             // 
             // menuItemShowMenuBar
@@ -269,7 +269,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             this.menuItemShowMenuBar.Checked = true;
             this.menuItemShowMenuBar.CheckState = System.Windows.Forms.CheckState.Checked;
             this.menuItemShowMenuBar.Name = "menuItemShowMenuBar";
-            this.menuItemShowMenuBar.Size = new System.Drawing.Size(180, 22);
+            this.menuItemShowMenuBar.Size = new System.Drawing.Size(125, 22);
             this.menuItemShowMenuBar.Text = "Menu Bar";
             this.menuItemShowMenuBar.Click += new System.EventHandler(this.menuItemShowMenuBar_Click);
             // 
@@ -350,7 +350,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
         private System.Windows.Forms.ToolStripButton toolStripButtonCityView;
         private System.Windows.Forms.ToolStripButton toolStripButtonCopyProtection;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem filemenuCloseGame;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem programOptionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;

@@ -28,6 +28,8 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
         private BitArray inventoryBitArray;
         private CharacterNameList cnl;
         private ObjectNameList objectNameList;
+        private ImageList mapIcons;
+        private Endianness m_endian;
         
         public EditorState ArchiveState
         { get { return archivestate; } set { archivestate = value; } } 
@@ -55,7 +57,9 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             m_loadedResource = loadedResource;
             m_characterIndex = m_loadedResource.ResourceNumber;
             m_fileFormat = Utils.GetCurrentFormat();
-            cnl = CharacterNameList.InitializeCharacterNames(m_fileFormat);
+            m_endian = m_fileFormat.Endian;
+            //cnl = CharacterNameList.InitializeCharacterNames(m_fileFormat);
+            cnl = new CharacterNameList();
             m_spriteCycles = new SpriteColorCycleSets(m_fileFormat.Name);
             m_currentArchive = new Archive(m_fileFormat,m_characterIndex);
             objectNameList = ObjectNameList.InitializeObjectNames(m_fileFormat);
@@ -90,6 +94,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             numberPower.Value = SaveArchive.SelectedCharacter.PowerLevel;
             numberStealth.Value = SaveArchive.SelectedCharacter.Stealth;
             numberStealth.Maximum=byte.MaxValue;
+            checkBoxVisible.Checked = SaveArchive.GetVisibility();
             txtLocationX.Text = SaveArchive.SelectedCharacter.Location.x.ToString();
             txtLocationY.Text = SaveArchive.SelectedCharacter.Location.y.ToString();
             textDestinationX.Text = SaveArchive.SelectedCharacter.Destination.x.ToString();
@@ -151,19 +156,19 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
         private void InitializeCityData()
         {
             int i;
-            City.CityBlock cityBlock;                   // Object for individual city block data.
+            CityBlock cityBlock;                   // Object for individual city block data.
             cityblocks = new CityBlocks();              // List of city block data objects.
             City initcity = new City(m_fileFormat);
             for (i = 0; i < Constants.CITY_TOTAL; i++)
             {
-                cityBlock = new City.CityBlock(initcity.EXEFile, initcity.Pointer + (initcity.BlockSize*i));
+                cityBlock = new CityBlock(initcity.EXEFile, initcity.Pointer + (initcity.BlockSize*i), m_endian);
                 cityblocks.Add(cityBlock);
             }
             initcity.EXEFile.Close();
         }
         private string ParseCity (Archive.Position position)
         {
-            City.CityBlock parse;
+            CityBlock parse;
             UInt16 currentX = position.x;
             UInt16 currentY = position.y;
             string result = City.Default;
@@ -172,7 +177,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             int j;
             for (j = 0; j < cityblocks.Count;j++)
             {
-                parse = new City.CityBlock(initcity.EXEFile, initcity.Pointer + (initcity.BlockSize * j));
+                parse = new CityBlock(initcity.EXEFile, initcity.Pointer + (initcity.BlockSize * j),m_endian);
 
                 if (currentX == parse.x )
                 {
@@ -187,6 +192,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             initcity.EXEFile.Close ();
             return result;
         }
+       
 
         /* ************************* EVENT HANDLERS FOR FORM ************************************************/
         private void numericSprite_ValueChanged(object sender, EventArgs e)
@@ -194,17 +200,16 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             ArchiveState.DataSaved = false;
             int val;
             if(numericSprite.Value == 16)
-                numericSprite.Value = numericSprite.Value + 64;
+                numericSprite.Value += 64;
             else if(numericSprite.Value == 79)
-                numericSprite.Value = numericSprite.Value - 64;
+                numericSprite.Value -= 64;
             val = (int)numericSprite.Value;
             textSpriteName.Text = SpriteType.GetSpriteData(val);
         }
 
         private void comboBoxFollow_SelectedValueChanged(object sender, EventArgs e)
         {
-            int result = 0;
-            result = m_leaders.GetLeaderValue(comboBoxFollow.Text);
+            int result = m_leaders.GetLeaderValue(comboBoxFollow.Text);
             textFollowValue.Text = result.ToString();
         }
     }

@@ -10,24 +10,10 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp.Classes
 {
     internal class GameObjects
     {
-
- 
-
-
-
     }
-
-
-
-
     public class ObjectNameList : GameStringList
     {
         public const int ObjectTotal = 16;
-
-
-
-        
-
 
         public static ObjectNameList InitializeObjectNames(FileFormat format)
         {

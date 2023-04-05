@@ -6,7 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace War_in_Middle_Earth_Game_Editor_C_Sharp
+
+namespace War_in_Middle_Earth_Game_Editor_C_Sharp.Classes
 {
     /// <summary>
     /// Class which handles Resource type IMAG.  IMAG files are used for title screen graphics, background art, trees, mountains, cities    
@@ -75,27 +76,27 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
         {
             get { return this.m_header; }
             set { m_header = value; }
-
         }
-       
-
         private IMAGHeader m_header;                        /* Header for IMAG Resource */
         private Palette[] m_palette;                        /* Palette array */
+        private FileFormat m_fileFormat;
+        private Endianness m_endian;
         private byte[] m_imageData;                         /* Compressed image data */
         private byte[] m_uImageData;                        /* Uncompressed image data array */
         private ByteRunUnpack unpack;
         //public IMAGHeader ih;
         //public Palette[] IMAG_Palette;
         //public byte[] chunkData;
-
        
         /* Default constructor */
         public IMAG_Resource()
         {
         }
-        public IMAG_Resource (BinaryReader br, int offset, int [] paletteIndex)
+        public IMAG_Resource (BinaryFileEndian br, int offset, int [] paletteIndex)
         {
-            m_header = new IMAGHeader(br,offset);
+            m_fileFormat = Utils.GetCurrentFormat();
+            m_endian=m_fileFormat.Endian;
+            m_header = new IMAGHeader(br,offset, m_endian);
             //MessageBox.Show("Header Info -- Height "+ m_header.height+ " Width "+ m_header.width);
             int t_size = (int)m_header.compSize - (m_header.rawStartOffset-4);
             if (t_size <= 0)
@@ -107,9 +108,6 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             WriteChunkFile(m_uImageData, offset);
             m_palette = new Palette[PaletteSize];
         }
-
-
-
 
         public static uint calculateRowSize(int width)
         {
@@ -145,11 +143,11 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             public int rawStartOffset;              /* int start of image data */
             public long imageStart;
 
-            public IMAGHeader(BinaryReader binRead, int offSet)
+            public IMAGHeader(BinaryFileEndian binRead, int offSet, Endianness end)
             {
                 binRead.BaseStream.Position = offSet;
-                this.compSize = binRead.ReadUInt32();
-                this.uncmpSize = binRead.ReadUInt32();
+                this.compSize = binRead.ReadUInt32(end);
+                this.uncmpSize = binRead.ReadUInt32(end);
                 this.unk1 = binRead.ReadByte();
                 this.unk2 = binRead.ReadByte();
                 this.unk3 = binRead.ReadByte();
@@ -163,17 +161,16 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
                 this.height = 0;
                 if (this.plane == 3)
                 {
-                    ushort c;
-                    this.width = binRead.ReadUInt16();
-                    c = (UInt16)((this.width & 0xFFU) << 8 | (this.width & 0xFF00U) >> 8);
-                    this.width = c;
+                    this.width = binRead.ReadUInt16(Endianness.endBig);
+                    //c = (UInt16)((this.width & 0xFFU) << 8 | (this.width & 0xFF00U) >> 8);
+                    //this.width = c;
                     this.unknown = binRead.ReadByte();
                     this.height = binRead.ReadByte(); 
                     this.rawStartOffset = 21;
                 }
                 else
                 {
-                    this.width = binRead.ReadUInt16();
+                    this.width = binRead.ReadUInt16(end);
                     this.height = binRead.ReadByte();;
                     this.rawStartOffset = 20;
 

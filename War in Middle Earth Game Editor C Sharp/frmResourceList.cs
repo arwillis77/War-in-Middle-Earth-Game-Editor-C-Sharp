@@ -47,7 +47,6 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
             this.ResourceType = resource;
             this.SelectedResource = rdata;
             this.SelectedResourceItemType = "";
-
             this.Dock = DockStyle.Fill;
         }
 
@@ -84,7 +83,7 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
                 listResourceItems.AutoResizeColumn(g, ColumnHeaderAutoResizeStyle.ColumnContent);
             listResourceItems.Columns[5].Width += 10;
             for (int h = 0; h <= listResourceItems.Columns.Count - 1; h++)
-                width = width + listResourceItems.Columns[h].Width;
+                width += listResourceItems.Columns[h].Width;
             listResourceItems.Width = width+5;
 
         }
@@ -112,41 +111,67 @@ namespace War_in_Middle_Earth_Game_Editor_C_Sharp
 
         private void DisplayResource(bool TabDisplay)
         {
-            //UserControl ResourceForm;
+            UserControl ResourceForm;
             TabPage Page;
             if (listResourceItems.SelectedItems.Count == 0)
                 return;
             SelectedItem = new ResourceViewData(listResourceItems);
-            if (SelectedItem.Type == "SAVEGAME")
+            string resourceType = SelectedItem.Type;
+
+
+            if (SelectedItem.Type == ResourceFile.chunkTypes[6])
             {
                 ResourceForm = new frmArchiveView(SelectedItem);
             }
-            else if(SelectedItem.Type == ResourceFile.chunkTypes[0])
+            else if (SelectedItem.Type == ResourceFile.chunkTypes[5])
             {
-                if (mt==null)
+                if (mt == null)
                     InitializeMapTiles();
                 Config cfg = new Config(true);
-                ResourceForm = new frmTileView(SelectedItem,mt,cfg.Scale, SelectedItem.ResourceNumber);
-            }       
+                ResourceForm = new frmMapView(SelectedItem,mt,cfg.Scale);
+            }
+            else if (SelectedItem.Type == ResourceFile.chunkTypes[0])
+            {
+                if (mt == null)
+                    InitializeMapTiles();
+                Config cfg = new Config(true);
+                ResourceForm = new frmTileView(SelectedItem, mt, cfg.Scale, SelectedItem.ResourceNumber);
+            }
             else
             {
                 ResourceForm = new frmViewResource(SelectedItem, 3);
+                MessageBox.Show("Else!");
+            
             }
-            ResourceForm.Dock = DockStyle.Fill;
+
+
+            //ResourceForm.Dock = DockStyle.Fill;
+
+            ResourceForm.Anchor = (AnchorStyles.Top | AnchorStyles.Bottom);
+            
             if (TabDisplay)
             {
+                MessageBox.Show("TabDisplay");
                 Page = new TabPage();
-                Page.Text = SelectedItem.Name;            
+                Page.Text = SelectedItem.Name;
                 Page.Controls.Add(ResourceForm);
                 ResourceForm.Show();
             }
             else
             {
-                splitResourceContainer.Panel2.Controls.Clear();
-                splitResourceContainer.Panel2.Controls.Add(ResourceForm);
+                LoadResourceViewer(ResourceForm);
+                ResourceForm.Show();
             }
-            ResourceForm.Show();
         }
+
+        private void LoadResourceViewer(UserControl control)
+        {
+            control.Dock = DockStyle.Fill;
+            this.splitResourceContainer.Panel2.Controls.Clear();
+            this.splitResourceContainer.Panel2.Controls.Add(control);
+        }
+
+
 
         private void listResourceItems_SelectedIndexChanged(object sender, EventArgs e)
         {
